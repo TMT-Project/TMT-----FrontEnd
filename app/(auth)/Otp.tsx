@@ -6,7 +6,7 @@ import KeyboardingAvoidWrapper from "../../components/KeyboardingAvoidWrapper";
 import CustomButton from "../../components/CustomButton";
 // import { BASE_URL } from "@env";
 
-export default function ForgotOtp() {
+const Otp = () => {
 	const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
 
 	const [count, setCount] = useState(10);
@@ -49,8 +49,6 @@ export default function ForgotOtp() {
 
 		console.log("entered otp: " + enteredOtp);
 
-		router.push("/(auth)/ResetPassword");
-
 		// TODO: API call to verify otp
 
 		const response = await fetch(
@@ -59,7 +57,7 @@ export default function ForgotOtp() {
 
 		if (response.ok) {
 			console.log("otp valid");
-			router.push("/(auth)/ResetPassword");
+			router.push("/(auth)/SignIn");
 		} else {
 			console.log("otp not valid");
 			Alert.alert("Invalid OTP");
@@ -207,4 +205,6 @@ export default function ForgotOtp() {
 			</KeyboardingAvoidWrapper>
 		</SafeAreaView>
 	);
-}
+};
+
+export default Otp;

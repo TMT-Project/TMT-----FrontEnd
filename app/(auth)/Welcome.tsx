@@ -56,6 +56,7 @@ export default function Welcome() {
 					</View>
 				))}
 			</Swiper>
+
 			<CustomButton
 				title={isLastSlide ? "Get Started" : "Next"}
 				className="w-11/12 mt-10 transition-all duration-1000 ease-in-out"
