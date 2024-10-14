@@ -49,8 +49,6 @@ const Otp = () => {
 
 		console.log("entered otp: " + enteredOtp);
 
-		// TODO: API call to verify otp
-
 		const response = await fetch(
 			`${BASE_URL}/auth/verify?otp=${enteredOtp}&email=${email}`,
 		);

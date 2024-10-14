@@ -51,8 +51,6 @@ export default function ForgotOtp() {
 
 		router.push("/(auth)/ResetPassword");
 
-		// TODO: API call to verify otp
-
 		const response = await fetch(
 			`${BASE_URL}/auth/verify?otp=${enteredOtp}&email=${email}`,
 		);

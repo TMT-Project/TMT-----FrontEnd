@@ -230,7 +230,7 @@ export default function SignUp() {
 					</Link>
 				</View>
 				<Link
-					href="/(auth)/Otp"
+					href="/(root)/(tabs)/Home"
 					className="text-lg text-center text-general-200 "
 				>
 					<Text className="text-base text-primary-500"> Login</Text>

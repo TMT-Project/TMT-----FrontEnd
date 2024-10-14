@@ -120,8 +120,8 @@ export default function SignIn() {
 					onPress={onSignInPress}
 					disabled={false}
 					className="mt-4"
-					IconLeft=""
-					IconRight=""
+					// IconLeft=""
+					// IconRight=""
 				/>
 
 				{/* Sign in */}
