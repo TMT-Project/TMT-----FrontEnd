@@ -21,3 +21,12 @@ declare interface InputFieldProps extends TextInputProps {
   required?: boolean;
   errors?: any;
 }
+
+type FormErrors = {
+	name?: string;
+	phone?: string;
+	email?: string;
+	password?: string;
+	confirmPassword?: string;
+	nationality?: string;
+};

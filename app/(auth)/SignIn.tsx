@@ -4,6 +4,7 @@ import { Link, router } from "expo-router";
 import InputField from "../../components/InputField";
 import CustomButton from "../../components/CustomButton";
 // import { BASE_URL } from "@env";
+import { FormErrors } from "@/types/type";
 
 export default function SignIn() {
 	const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
@@ -12,13 +13,13 @@ export default function SignIn() {
 		password: "",
 	});
 
-	const [errors, setErrors] = useState({
+	const [errors, setErrors] = useState<FormErrors>({
 		email: "",
 		password: "",
 	});
 
 	const validateForm = () => {
-		let newErrors = {};
+		let newErrors: FormErrors = {};
 
 		if (!userData.email.trim()) {
 			newErrors.email = "Email is required";
@@ -36,7 +37,7 @@ export default function SignIn() {
 			)
 		) {
 			newErrors.password =
-				"Password must contain atleast 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character";
+				"Password must contain at least 1 upper-case letter, 1 lower-case letter, 1 number, and 1 special character";
 		}
 		setErrors(newErrors);
 		return Object.keys(newErrors).length === 0;
@@ -136,7 +137,7 @@ export default function SignIn() {
 				</Link>
 				{/* Sign in */}
 				<Link
-					href="/(auth)/ForgotPassword"
+					href="/(auth)/Otp"
 					className="text-lg text-center text-general-200 "
 				>
 					{/* <Text className="text-base text-center text-gray-500">

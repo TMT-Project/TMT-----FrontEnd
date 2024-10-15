@@ -6,17 +6,17 @@ import KeyboardingAvoidWrapper from "../../components/KeyboardingAvoidWrapper";
 import CustomButton from "../../components/CustomButton";
 // import { BASE_URL } from "@env";
 
-const Otp = () => {
+export default function Otp() {
 	const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
 
 	const [count, setCount] = useState(10);
 
 	const { email } = useLocalSearchParams();
 
-	const otp1 = useRef(null);
-	const otp2 = useRef(null);
-	const otp3 = useRef(null);
-	const otp4 = useRef(null);
+	const otp1 = useRef<TextInput | null>(null);
+	const otp2 = useRef<TextInput | null>(null);
+	const otp3 = useRef<TextInput | null>(null);
+	const otp4 = useRef<TextInput | null>(null);
 
 	const [otp, setOtp] = useState({
 		otp1: "",
@@ -25,14 +25,37 @@ const Otp = () => {
 		otp4: "",
 	});
 
-	const [errors, setErrors] = useState();
+	const [errors, setErrors] = useState("");
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			if (count === 0) {
+				clearInterval(interval);
+			} else {
+				setCount(count - 1);
+			}
+		}, 1000);
+		return () => clearInterval(interval);
+	}, [count]);
 
 	const validateForm = () => {
 		if (otp.otp1 == "" || otp.otp2 == "" || otp.otp3 == "" || otp.otp4 == "") {
-			setErrors("otp not valid");
+			setErrors("OTP Invalid");
 			console.log("otp not valid");
 			return false;
 		}
+
+		if (
+			otp.otp1.match(/^[0-9]$/) == null ||
+			otp.otp2.match(/^[0-9]$/) == null ||
+			otp.otp3.match(/^[0-9]$/) == null ||
+			otp.otp4.match(/^[0-9]$/) == null
+		) {
+			setErrors("OTP Invalid");
+			console.log("otp not valid");
+			return false;
+		}
+
 		return true;
 	};
 
@@ -69,17 +92,6 @@ const Otp = () => {
 		console.log(otp);
 	};
 
-	useEffect(() => {
-		const interval = setInterval(() => {
-			if (count === 0) {
-				clearInterval(interval);
-			} else {
-				setCount(count - 1);
-			}
-		}, 1000);
-		return () => clearInterval(interval);
-	}, [count]);
-
 	return (
 		<SafeAreaView className="flex-1 bg-white">
 			<View className="w-full mt-5 flex flex-row items-center p-5">
@@ -107,9 +119,9 @@ const Otp = () => {
 							onChangeText={(txt) => {
 								setOtp({ ...otp, otp1: txt });
 								if (txt.length >= 1) {
-									otp2.current.focus();
+									otp2.current?.focus();
 								} else if (txt.length < 1) {
-									otp1.current.focus();
+									otp1.current?.focus();
 								}
 							}}
 						/>
@@ -121,9 +133,14 @@ const Otp = () => {
 							onChangeText={(txt) => {
 								setOtp({ ...otp, otp2: txt });
 								if (txt.length >= 1) {
-									otp3.current.focus();
-								} else if (txt.length < 1) {
-									otp1.current.focus();
+									otp3.current?.focus();
+								} else if (txt.length == 0) {
+									otp1.current?.focus();
+								}
+							}}
+							onKeyPress={(e) => {
+								if (e.nativeEvent.key === "Backspace") {
+									otp1.current?.focus();
 								}
 							}}
 						/>
@@ -135,9 +152,14 @@ const Otp = () => {
 							onChangeText={(txt) => {
 								setOtp({ ...otp, otp3: txt });
 								if (txt.length >= 1) {
-									otp4.current.focus();
+									otp4.current?.focus();
 								} else if (txt.length < 1) {
-									otp2.current.focus();
+									otp2.current?.focus();
+								}
+							}}
+							onKeyPress={(e) => {
+								if (e.nativeEvent.key === "Backspace") {
+									otp2.current?.focus();
 								}
 							}}
 						/>
@@ -149,9 +171,14 @@ const Otp = () => {
 							onChangeText={(txt) => {
 								setOtp({ ...otp, otp4: txt });
 								if (txt.length >= 1) {
-									otp4.current.focus();
+									otp4.current?.focus();
 								} else if (txt.length < 1) {
-									otp3.current.focus();
+									otp3.current?.focus();
+								}
+							}}
+							onKeyPress={(e) => {
+								if (e.nativeEvent.key === "Backspace") {
+									otp3.current?.focus();
 								}
 							}}
 						/>
@@ -171,8 +198,6 @@ const Otp = () => {
 							}`}
 							onPress={onVerifyPress}
 							className={`mt-5`}
-							IconLeft=""
-							IconRight=""
 							disabled={
 								otp.otp1 !== "" &&
 								otp.otp2 !== "" &&
@@ -203,6 +228,4 @@ const Otp = () => {
 			</KeyboardingAvoidWrapper>
 		</SafeAreaView>
 	);
-};
-
-export default Otp;
+}
