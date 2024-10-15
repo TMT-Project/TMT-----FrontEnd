@@ -6,10 +6,17 @@ import InputField from "../../components/InputField";
 import CustomButton from "../../components/CustomButton";
 import KeyboardingAvoidWrapper from "../../components/KeyboardingAvoidWrapper";
 // import { BASE_URL } from "@env";
+import { FormErrors } from "@/types/type";
 
 export default function SignUp() {
 	const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
-	const [countries, setCountries] = useState([]);
+	const [countries, setCountries] = useState<
+		{
+			code: string;
+			id: number;
+			name: string;
+		}[]
+	>([]);
 
 	const [selectedCountry, setSelectedCountry] = useState("");
 
@@ -22,7 +29,7 @@ export default function SignUp() {
 		nationality: "",
 	});
 
-	const [errors, setErrors] = useState({
+	const [errors, setErrors] = useState<FormErrors>({
 		name: "",
 		email: "",
 		phone: "",
@@ -30,42 +37,6 @@ export default function SignUp() {
 		confirmPassword: "",
 		nationality: "",
 	});
-
-	const validateForm = () => {
-		let newErrors = {};
-
-		if (!userData.email.trim()) {
-			newErrors.email = "Email is required";
-		} else if (!/^\S+@\S+\.\S+$/.test(userData.email)) {
-			newErrors.email = "Invalid email format";
-		}
-
-		if (!userData.phone.trim()) {
-			newErrors.mobileNumber = "Phone Number is required";
-		} else if (userData.phone.length !== 10) {
-			newErrors.mobileNumber = "Phone Number must be 10 characters";
-		}
-
-		if (!userData.password.trim()) {
-			newErrors.password = "Password is required";
-		} else if (userData.password.length < 8) {
-			newErrors.password = "Password must be at least 8 characters";
-		} else if (
-			!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-				userData.password,
-			)
-		) {
-			newErrors.password =
-				"Password must contain atleast 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character";
-		}
-
-		if (userData.password !== userData.confirmPassword) {
-			newErrors.confirmPassword = "Passwords do not match";
-		}
-
-		setErrors(newErrors);
-		return Object.keys(newErrors).length === 0;
-	};
 
 	useEffect(() => {
 		const fetchCountries = async () => {
@@ -80,6 +51,55 @@ export default function SignUp() {
 		};
 		fetchCountries();
 	}, []);
+
+	const validateForm = () => {
+		let newErrors: FormErrors = {};
+
+		if (!userData.name.trim()) {
+			newErrors.name = "Name is required";
+		} else if (userData.name.length < 3) {
+			newErrors.name = "Name must be at least 3 characters";
+		}
+
+		if (!userData.email.trim()) {
+			newErrors.email = "Email is required";
+		} else if (!/^\S+@\S+\.\S+$/.test(userData.email)) {
+			newErrors.email = "Invalid email format";
+		}
+
+		if (!userData.phone.trim()) {
+			newErrors.phone = "Phone Number is required";
+		} else if (userData.phone.length !== 10) {
+			newErrors.phone = "Phone Number must be 10 characters";
+		}
+
+		if (!userData.password.trim()) {
+			newErrors.password = "Password is required";
+		} else if (userData.password.length < 8) {
+			newErrors.password = "Password must be at least 8 characters";
+		} else if (
+			!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+				userData.password,
+			)
+		) {
+			newErrors.password =
+				"Password must contain at least 1 upper-case letter, 1 lower-case letter, 1 number, and 1 special character";
+		}
+
+		if (
+			userData.password !== userData.confirmPassword ||
+			!userData.confirmPassword
+		) {
+			newErrors.confirmPassword = "Passwords do not match";
+		}
+
+		if (!userData.nationality.trim()) {
+			newErrors.nationality = "Select a country";
+		}
+
+		setErrors(newErrors);
+		return Object.keys(newErrors).length === 0;
+	};
 
 	const onSignUpPress = async () => {
 		try {
@@ -128,7 +148,7 @@ export default function SignUp() {
 	return (
 		<SafeAreaView className="flex-1 bg-white">
 			<View className="w-full mt-5 flex flex-row items-center p-5">
-				<Link href="/(auth)/Welcome">
+				<Link href="/(auth)/Initial">
 					<Text className="text-lg text-black font-JakartaBold">Back</Text>
 				</Link>
 			</View>
@@ -147,6 +167,7 @@ export default function SignUp() {
 						placeholder="Enter your name"
 						value={userData.name}
 						onChangeText={(value) => setUserData({ ...userData, name: value })}
+						errors={errors.name}
 					/>
 					<InputField
 						label="Email"
@@ -214,14 +235,12 @@ export default function SignUp() {
 						title="Sign Up"
 						onPress={onSignUpPress}
 						className="mt-4"
-						IconLeft=""
-						IconRight=""
 					/>
 
 					{/* Login */}
 					<Link
 						href="/(auth)/SignIn"
-						className="text-lg text-center text-general-200 "
+						className="text-lg text-center text-general-200 mt-3"
 					>
 						<Text className="text-base text-center text-gray-500">
 							Already have an account?
@@ -229,12 +248,9 @@ export default function SignUp() {
 						<Text className="text-base text-primary-500"> Login</Text>
 					</Link>
 				</View>
-				<Link
-					href="/(auth)/Otp"
-					className="text-lg text-center text-general-200 "
-				>
+				{/* <Link href="/Otp" className="text-lg text-center text-general-200 ">
 					<Text className="text-base text-primary-500"> Login</Text>
-				</Link>
+				</Link> */}
 			</KeyboardingAvoidWrapper>
 		</SafeAreaView>
 	);
