@@ -33,7 +33,7 @@ export default function ResetPassword() {
 			)
 		) {
 			newErrors.password =
-				"Password must contain atleast 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character";
+				"Password must contain at least 1 upper-case letter, 1 lower-case letter, 1 number, and 1 special character";
 		}
 
 		if (userData.password !== userData.confirmPassword) {
