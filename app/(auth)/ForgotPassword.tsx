@@ -5,18 +5,19 @@ import InputField from "../../components/InputField";
 import CustomButton from "../../components/CustomButton";
 import { useState } from "react";
 // import { BASE_URL } from "@env";
+import { FormErrors } from "@/types/type";
 
 export default function ForgotPassword() {
 	const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
 	const [userData, setUserData] = useState({
 		email: "",
 	});
-	const [errors, setErrors] = useState({
+	const [errors, setErrors] = useState<FormErrors>({
 		email: "",
 	});
 
 	const validateForm = () => {
-		let newErrors = {};
+		let newErrors: FormErrors = {};
 
 		if (!userData.email.trim()) {
 			newErrors.email = "Email is required";
@@ -75,7 +76,7 @@ export default function ForgotPassword() {
 	return (
 		<SafeAreaView className="flex-1 bg-white">
 			<View className="w-full mt-5 flex flex-row items-center p-5">
-				<Link href="/(auth)/SignUp">
+				<Link href="/(auth)/SignIn">
 					<Text className="text-lg text-black font-JakartaBold">Back</Text>
 				</Link>
 			</View>
@@ -99,8 +100,6 @@ export default function ForgotPassword() {
 					onPress={onSubmit}
 					disabled={false}
 					className="mt-4"
-					IconLeft=""
-					IconRight=""
 				/>
 
 				{/* Sign in */}

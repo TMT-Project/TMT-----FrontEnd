@@ -4,7 +4,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import KeyboardingAvoidWrapper from "../../components/KeyboardingAvoidWrapper";
 import CustomButton from "../../components/CustomButton";
-// import { BASE_URL } from "@env";
 
 export default function Otp() {
 	const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
@@ -39,7 +38,12 @@ export default function Otp() {
 	}, [count]);
 
 	const validateForm = () => {
-		if (otp.otp1 == "" || otp.otp2 == "" || otp.otp3 == "" || otp.otp4 == "") {
+		if (
+			otp.otp1 === "" ||
+			otp.otp2 === "" ||
+			otp.otp3 === "" ||
+			otp.otp4 === ""
+		) {
 			setErrors("OTP Invalid");
 			console.log("otp not valid");
 			return false;
@@ -109,18 +113,22 @@ export default function Otp() {
 					</Text>
 				</View>
 				<View className="px-5 pt-2 my-10 w-full flex flex-col justify-center items-center">
-					{/* OTPInputView */}
 					<View className="w-full flex flex-row justify-center items-center">
 						<TextInput
 							ref={otp1}
 							keyboardType="numeric"
 							maxLength={1}
 							className={`p-2 text-xl border border-neutral-300 rounded-xl text-center w-[52px] h-[52px] mr-5 ${"focus:border-primary-500"}`}
+							value={otp.otp1}
 							onChangeText={(txt) => {
 								setOtp({ ...otp, otp1: txt });
-								if (txt.length >= 1) {
+
+								if (txt.length >= 1 && txt.match(/^[0-9]$/) !== null) {
 									otp2.current?.focus();
-								} else if (txt.length < 1) {
+								}
+							}}
+							onKeyPress={(e) => {
+								if (e.nativeEvent.key === "Backspace" && otp.otp1 === "") {
 									otp1.current?.focus();
 								}
 							}}
@@ -130,16 +138,15 @@ export default function Otp() {
 							keyboardType="numeric"
 							maxLength={1}
 							className={`p-2 text-xl border border-neutral-300 rounded-xl text-center w-[52px] h-[52px] mr-5 ${"focus:border-primary-500"}`}
+							value={otp.otp2}
 							onChangeText={(txt) => {
 								setOtp({ ...otp, otp2: txt });
-								if (txt.length >= 1) {
+								if (txt.length >= 1 && txt.match(/^[0-9]$/) !== null) {
 									otp3.current?.focus();
-								} else if (txt.length == 0) {
-									otp1.current?.focus();
 								}
 							}}
 							onKeyPress={(e) => {
-								if (e.nativeEvent.key === "Backspace") {
+								if (e.nativeEvent.key === "Backspace" && otp.otp2 === "") {
 									otp1.current?.focus();
 								}
 							}}
@@ -149,16 +156,15 @@ export default function Otp() {
 							keyboardType="numeric"
 							maxLength={1}
 							className={`p-2 text-xl border border-neutral-300 rounded-xl text-center w-[52px] h-[52px] mr-5 ${"focus:border-primary-500"}`}
+							value={otp.otp3}
 							onChangeText={(txt) => {
 								setOtp({ ...otp, otp3: txt });
-								if (txt.length >= 1) {
+								if (txt.length >= 1 && txt.match(/^[0-9]$/) !== null) {
 									otp4.current?.focus();
-								} else if (txt.length < 1) {
-									otp2.current?.focus();
 								}
 							}}
 							onKeyPress={(e) => {
-								if (e.nativeEvent.key === "Backspace") {
+								if (e.nativeEvent.key === "Backspace" && otp.otp3 === "") {
 									otp2.current?.focus();
 								}
 							}}
@@ -168,16 +174,12 @@ export default function Otp() {
 							keyboardType="numeric"
 							maxLength={1}
 							className={`p-2 text-xl border border-neutral-300 rounded-xl text-center w-[52px] h-[52px] mr-5 ${"focus:border-primary-500"}`}
+							value={otp.otp4}
 							onChangeText={(txt) => {
 								setOtp({ ...otp, otp4: txt });
-								if (txt.length >= 1) {
-									otp4.current?.focus();
-								} else if (txt.length < 1) {
-									otp3.current?.focus();
-								}
 							}}
 							onKeyPress={(e) => {
-								if (e.nativeEvent.key === "Backspace") {
+								if (e.nativeEvent.key === "Backspace" && otp.otp4 === "") {
 									otp3.current?.focus();
 								}
 							}}

@@ -6,6 +6,7 @@ import { Link, router } from "expo-router";
 import KeyboardingAvoidWrapper from "../../components/KeyboardingAvoidWrapper";
 import InputField from "../../components/InputField";
 import CustomButton from "../../components/CustomButton";
+import { FormErrors } from "@/types/type";
 
 export default function ResetPassword() {
 	const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
@@ -14,13 +15,13 @@ export default function ResetPassword() {
 		confirmPassword: "",
 	});
 
-	const [errors, setErrors] = useState({
+	const [errors, setErrors] = useState<FormErrors>({
 		password: "",
 		confirmPassword: "",
 	});
 
 	const validateForm = () => {
-		let newErrors = {};
+		let newErrors: FormErrors = {};
 
 		if (!userData.password.trim()) {
 			newErrors.password = "Password is required";
@@ -63,7 +64,7 @@ export default function ResetPassword() {
 			router.push("/(auth)/Otp");
 
 			// API call
-			const response = await fetch(`${url}/auth/register`, {
+			const response = await fetch(`${BASE_URL}/auth/register`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -124,8 +125,6 @@ export default function ResetPassword() {
 						title="Sign Up"
 						onPress={onResetPress}
 						className="mt-4"
-						IconLeft=""
-						IconRight=""
 					/>
 
 					{/* Login */}

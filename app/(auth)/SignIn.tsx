@@ -137,7 +137,7 @@ export default function SignIn() {
 				</Link>
 				{/* Sign in */}
 				<Link
-					href="/(auth)/Otp"
+					href="/(auth)/ForgotPassword"
 					className="text-lg text-center text-general-200 "
 				>
 					{/* <Text className="text-base text-center text-gray-500">
