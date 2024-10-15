@@ -23,7 +23,7 @@ export default function Welcome() {
 		<SafeAreaView className="flex h-full items-center justify-between bg-white">
 			<TouchableOpacity
 				onPress={() => {
-					router.push("/(auth)/ForgotOtp");
+					router.push("/(root)/(tabs)/Home");
 				}}
 				className="w-full flex justify-end items-end p-5"
 			>
