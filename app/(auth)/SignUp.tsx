@@ -10,6 +10,8 @@ import { FormErrors } from "@/types/type";
 
 export default function SignUp() {
 	const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
+	console.log(BASE_URL);
+
 	const [countries, setCountries] = useState<
 		{
 			code: string;
@@ -156,7 +158,7 @@ export default function SignUp() {
 				<View className="w-full items-center ">
 					<Text className="text-3xl font-JakartaBold mb-2">Sign Up</Text>
 					<Text className="text-base text-gray-500">
-						Create an account to start your journey
+						Create an account to start your journey{BASE_URL}
 					</Text>
 				</View>
 

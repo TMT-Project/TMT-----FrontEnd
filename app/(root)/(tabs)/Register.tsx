@@ -1,14 +1,17 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RadioButtons from "@/components/RadioButtons";
 import DatePicker from "@/components/DatePicker";
 import KeyboardingAvoidWrapper from "@/components/KeyboardingAvoidWrapper";
 import InputField from "@/components/InputField";
+import {
+	heightPercentageToDP as hp,
+	widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
 
 export default function Register() {
 	const [option, setOption] = useState("");
-
 	const [registerInfo, setRegisterInfo] = useState({
 		serviceType: "",
 		flightNumber: "",
@@ -31,7 +34,7 @@ export default function Register() {
 	}
 
 	return (
-		<SafeAreaView className="flex flex-1 items-center px-3 pt-5">
+		<SafeAreaView className="flex h-full items-center p-3 pt-5 ">
 			<Text className="text-3xl">Register</Text>
 			<KeyboardingAvoidWrapper>
 				<View className="w-full">
@@ -52,11 +55,15 @@ export default function Register() {
 						<InputField
 							placeholder="Flight Number"
 							inputStyle="border border-black w-full text-2xl"
-							inputContainerStyle="border-0"
+							inputContainerStyle="border-0 rounded-none"
 							onChangeText={(text) => handleChange("flightNumber", text)}
 						/>
 					</View>
-					<View className="w-full mb-3 flex flex-row justify-between gap-x-1">
+					<View
+						className={
+							"w-full mb-3 flex flex-row justify-between gap-x-4 " + ""
+						}
+					>
 						<InputField
 							placeholder="From"
 							inputStyle="border border-black p-3 w-full text-2xl"
@@ -98,7 +105,7 @@ export default function Register() {
 							onChangeText={(text) => handleChange("pnrNumber", text)}
 						/>
 					</View>
-					<View className="h-[250px] mb-3 w-full border-2 border-dashed flex justify-center items-center">
+					<View className="h-[240px] mb-3 w-full border-2 border-dashed flex justify-center items-center">
 						<Text className="text-3xl">Upload Image +</Text>
 					</View>
 					<TouchableOpacity onPress={handleRegister} className="">
