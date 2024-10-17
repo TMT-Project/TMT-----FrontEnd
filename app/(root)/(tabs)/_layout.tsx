@@ -1,9 +1,10 @@
 import React from "react";
 import { Tabs } from "expo-router";
+import TabBar from "@/components/TabBar";
 
 export default function Layout() {
 	return (
-		<Tabs>
+		<Tabs tabBar={(props) => <TabBar {...props} />}>
 			<Tabs.Screen
 				name="Home"
 				options={{
@@ -13,7 +14,7 @@ export default function Layout() {
 			/>
 			<Tabs.Screen
 				name="Search"
-				options={{ title: "Search flights", headerShown: false }}
+				options={{ title: "Search", headerShown: false }}
 			/>
 			<Tabs.Screen
 				name="Register"
