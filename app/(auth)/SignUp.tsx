@@ -156,7 +156,7 @@ export default function SignUp() {
 		const fetchCountries = async () => {
 			try {
 				const response = await fetch(
-					`https://jsonplaceholder.typicode.com/users`,
+					`http://88.222.212.112:8080/tmt/countries`,
 				);
 				const data = await response.json();
 				setState(JSON.stringify(data));
