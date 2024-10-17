@@ -43,7 +43,10 @@ export default function SignUp() {
 	useEffect(() => {
 		const fetchCountries = async () => {
 			try {
-				const response = await fetch(`${BASE_URL}/tmt/countries`);
+				// const response = await fetch(`${BASE_URL}/tmt/countries`);
+				const response = await fetch(
+					`http://88.222.212.112:8080/tmt/countries`,
+				);
 				const data = await response.json();
 				setCountries(data);
 				console.log("countries", countries);
@@ -158,7 +161,7 @@ export default function SignUp() {
 				<View className="w-full items-center ">
 					<Text className="text-3xl font-JakartaBold mb-2">Sign Up</Text>
 					<Text className="text-base text-gray-500">
-						Create an account to start your journey{BASE_URL}
+						Create an account to start your journey
 					</Text>
 				</View>
 

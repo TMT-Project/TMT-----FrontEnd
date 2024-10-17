@@ -9,6 +9,9 @@
 			"distribution": "internal"
 		},
 		"local": {
+			"env": {
+				"EXPO_PUBLIC_BASE_URL":"EXPO_PUBLIC_BASE_URL"
+			},
 			"android": {
 				"buildType": "apk"
 			}
