@@ -1,14 +1,25 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, Modal, Button } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RadioButtons from "@/components/RadioButtons";
 import DatePicker from "@/components/DatePicker";
 import KeyboardingAvoidWrapper from "@/components/KeyboardingAvoidWrapper";
 import InputField from "@/components/InputField";
+import CustomButton from "@/components/CustomButton";
 import {
-	heightPercentageToDP as hp,
-	widthPercentageToDP as wp,
-} from "react-native-responsive-screen";
+	responsiveFontSize,
+	responsiveWidth,
+} from "react-native-responsive-dimensions";
+
+type RegisterErrors = {
+	flightNumber?: string;
+	from?: string;
+	to?: string;
+	date?: string;
+	weight?: string;
+	pnrNumber?: string;
+	image?: string;
+};
 
 export default function Register() {
 	const [option, setOption] = useState("");
@@ -23,22 +34,87 @@ export default function Register() {
 		image: "",
 	});
 
+	const [errors, setErrors] = useState<RegisterErrors>({
+		flightNumber: "",
+		from: "",
+		to: "",
+		date: "",
+		weight: "",
+		pnrNumber: "",
+		image: "",
+	});
+
+	const [modalVisible, setModalVisible] = useState(false);
+
 	const options = ["Need Help", "Help Others"];
 
 	function handleChange(field: string, value: string) {
 		setRegisterInfo({ ...registerInfo, [field]: value });
 	}
 
+	function validateForm() {
+		let newErrors: RegisterErrors = {};
+
+		if (!registerInfo.flightNumber.trim()) {
+			newErrors.flightNumber = "Flight Number is required";
+		}
+
+		if (!registerInfo.date.trim()) {
+			newErrors.date = "Date is required";
+		}
+
+		if (!registerInfo.weight.trim()) {
+			newErrors.weight = "Weight is required";
+		}
+
+		if (!registerInfo.pnrNumber.trim()) {
+			newErrors.pnrNumber = "PNR Number is required";
+		}
+
+		setErrors(newErrors);
+		return Object.keys(newErrors).length === 0;
+	}
+
 	function handleRegister() {
+		if (!validateForm()) return;
 		console.log(registerInfo);
+		// TODO: API call for registering the trip
+		setModalVisible(true);
+	}
+
+	function resetForm() {
+		setErrors({
+			flightNumber: "",
+			from: "",
+			to: "",
+			date: "",
+			weight: "",
+			pnrNumber: "",
+			image: "",
+		});
+		setModalVisible(false);
+		setRegisterInfo({
+			serviceType: "",
+			flightNumber: "",
+			from: "",
+			to: "",
+			date: "",
+			weight: "",
+			pnrNumber: "",
+			image: "",
+		});
 	}
 
 	return (
 		<SafeAreaView className="flex h-full items-center p-3 pt-5 ">
-			<Text className="text-3xl">Register</Text>
+			<View className="flex flex-col items-center justify-center gap-2 mb-5">
+				<Text className="text-3xl">Register</Text>
+				<Text className="text-lg">Register your Trip here</Text>
+			</View>
+
 			<KeyboardingAvoidWrapper>
 				<View className="w-full">
-					<View className="flex flex-row mb-3 justify-around items-center w-full">
+					<View className="flex flex-row mb-2 justify-between items-center w-full">
 						<Text className="text-xl font-medium">Service</Text>
 						<RadioButtons
 							currentOption={option}
@@ -51,70 +127,105 @@ export default function Register() {
 							onChanged={(value) => handleChange("serviceType", value)}
 						/>
 					</View>
-					<View className="w-full mb-3">
+					<View className="w-full mb-2">
 						<InputField
 							placeholder="Flight Number"
-							inputStyle="border border-black w-full text-2xl"
-							inputContainerStyle="border-0 rounded-none"
+							label="Flight Number"
 							onChangeText={(text) => handleChange("flightNumber", text)}
+							errors={errors.flightNumber}
+							value={registerInfo.flightNumber}
 						/>
 					</View>
-					<View
-						className={
-							"w-full mb-3 flex flex-row justify-between gap-x-4 " + ""
-						}
-					>
-						<InputField
-							placeholder="From"
-							inputStyle="border border-black p-3 w-full text-2xl"
-							containerStyle="w-1/2"
-							inputContainerStyle="border-0"
-							editable={false}
-							onChangeText={(text) => handleChange("from", text)}
-						/>
-						<InputField
-							placeholder="To"
-							inputStyle="border border-black p-3 w-full text-2xl"
-							containerStyle="w-1/2"
-							inputContainerStyle="border-0"
-							editable={false}
-							onChangeText={(text) => handleChange("to", text)}
-						/>
-					</View>
-					<View className="w-full mb-3">
+					<View className="w-full mb-2">
 						<DatePicker
 							onChange={(date) => {
 								setRegisterInfo({ ...registerInfo, date: date.toDateString() });
 							}}
+							error={errors.date}
+							value={registerInfo.date}
 						/>
 					</View>
-					<View className="w-full mb-3 flex flex-row justify-between gap-x-1">
+					<View className={"w-full mb-2 flex justify-between"}>
+						<InputField
+							placeholder="Source"
+							label="From"
+							editable={false}
+							onChangeText={(text) => handleChange("from", text)}
+							value={registerInfo.from}
+							// errors={errors.from}
+						/>
+					</View>
+					<View className="w-full mb-2">
+						<InputField
+							placeholder="Destination"
+							label="To"
+							editable={false}
+							onChangeText={(text) => handleChange("to", text)}
+							value={registerInfo.to}
+							// errors={errors.to}
+						/>
+					</View>
+					<View className="w-full mb-2 flex justify-between">
 						<InputField
 							placeholder="Weight in Kg"
-							inputStyle="border border-black p-3 w-full text-2xl"
-							containerStyle="w-1/2"
-							inputContainerStyle="border-0"
+							label="Weight"
 							inputMode="numeric"
 							onChangeText={(text) => handleChange("weight", text)}
+							errors={errors.weight}
+							value={registerInfo.weight}
 						/>
+					</View>
+					<View className="w-full mb-2">
 						<InputField
-							placeholder="PNR Number"
-							inputStyle="border border-black p-3 w-full text-2xl"
-							containerStyle="w-1/2"
-							inputContainerStyle="border-0"
+							placeholder="Enter PNR Number"
+							label="PNR Number"
 							onChangeText={(text) => handleChange("pnrNumber", text)}
+							errors={errors.pnrNumber}
+							value={registerInfo.pnrNumber}
 						/>
 					</View>
-					<View className="h-[240px] mb-3 w-full border-2 border-dashed flex justify-center items-center">
+					{/* <View className="h-[240px] mb-3 w-full border-2 border-dashed flex justify-center items-center">
 						<Text className="text-3xl">Upload Image +</Text>
-					</View>
-					<TouchableOpacity onPress={handleRegister} className="">
-						<Text className="text-2xl text-center text-white bg-black p-3 rounded-lg">
-							Register
-						</Text>
-					</TouchableOpacity>
+					</View> */}
+					<CustomButton
+						title="Register"
+						onPress={handleRegister}
+						className={""}
+					/>
 				</View>
 			</KeyboardingAvoidWrapper>
+
+			<Modal
+				visible={modalVisible}
+				onRequestClose={() => setModalVisible(false)}
+				animationType="fade"
+			>
+				<View className="flex justify-center items-center h-full">
+					<View
+						className="flex items-center justify-center gap-y-10 border border-black rounded-3xl p-3"
+						style={{
+							width: responsiveWidth(80),
+						}}
+					>
+						<Text
+							style={{
+								fontSize: responsiveFontSize(2.5),
+								fontWeight: "medium",
+							}}
+						>
+							Trip Registered Successfully
+						</Text>
+						<CustomButton
+							title="Ok"
+							onPress={() => {
+								setModalVisible(false);
+								resetForm();
+							}}
+							className="w-1/2"
+						/>
+					</View>
+				</View>
+			</Modal>
 		</SafeAreaView>
 	);
 }

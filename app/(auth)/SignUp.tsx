@@ -9,163 +9,146 @@ import KeyboardingAvoidWrapper from "../../components/KeyboardingAvoidWrapper";
 import { FormErrors } from "@/types/type";
 
 export default function SignUp() {
-	// const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
-	// console.log(BASE_URL);
+	const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
+	console.log(BASE_URL);
 
-	// const [countries, setCountries] = useState<
-	// 	{
-	// 		code: string;
-	// 		id: number;
-	// 		name: string;
-	// 	}[]
-	// >([]);
+	const [countries, setCountries] = useState<
+		{
+			code: string;
+			id: number;
+			name: string;
+		}[]
+	>([]);
 
-	// const [selectedCountry, setSelectedCountry] = useState("");
+	const [selectedCountry, setSelectedCountry] = useState("");
 
-	// const [userData, setUserData] = useState({
-	// 	name: "",
-	// 	email: "",
-	// 	phone: "",
-	// 	password: "",
-	// 	confirmPassword: "",
-	// 	nationality: "",
-	// });
+	const [userData, setUserData] = useState({
+		name: "",
+		email: "",
+		phone: "",
+		password: "",
+		confirmPassword: "",
+		nationality: "",
+	});
 
-	// const [errors, setErrors] = useState<FormErrors>({
-	// 	name: "",
-	// 	email: "",
-	// 	phone: "",
-	// 	password: "",
-	// 	confirmPassword: "",
-	// 	nationality: "",
-	// });
-
-	// useEffect(() => {
-	// 	const fetchCountries = async () => {
-	// 		try {
-	// 			// const response = await fetch(`${BASE_URL}/tmt/countries`);
-	// 			const response = await fetch(
-	// 				`http://88.222.212.112:8080/tmt/countries`,
-	// 			);
-	// 			const data = await response.json();
-	// 			setCountries(data);
-	// 			console.log("countries", countries);
-	// 		} catch (error) {
-	// 			console.error("Error fetching countries:", error);
-	// 		}
-	// 	};
-	// 	fetchCountries();
-	// }, []);
-
-	// const validateForm = () => {
-	// 	let newErrors: FormErrors = {};
-
-	// 	if (!userData.name.trim()) {
-	// 		newErrors.name = "Name is required";
-	// 	} else if (userData.name.length < 3) {
-	// 		newErrors.name = "Name must be at least 3 characters";
-	// 	}
-
-	// 	if (!userData.email.trim()) {
-	// 		newErrors.email = "Email is required";
-	// 	} else if (!/^\S+@\S+\.\S+$/.test(userData.email)) {
-	// 		newErrors.email = "Invalid email format";
-	// 	}
-
-	// 	if (!userData.phone.trim()) {
-	// 		newErrors.phone = "Phone Number is required";
-	// 	} else if (userData.phone.length !== 10) {
-	// 		newErrors.phone = "Phone Number must be 10 characters";
-	// 	}
-
-	// 	if (!userData.password.trim()) {
-	// 		newErrors.password = "Password is required";
-	// 	} else if (userData.password.length < 8) {
-	// 		newErrors.password = "Password must be at least 8 characters";
-	// 	} else if (
-	// 		!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-	// 			userData.password,
-	// 		)
-	// 	) {
-	// 		newErrors.password =
-	// 			"Password must contain at least 1 upper-case letter, 1 lower-case letter, 1 number, and 1 special character";
-	// 	}
-
-	// 	if (
-	// 		userData.password !== userData.confirmPassword ||
-	// 		!userData.confirmPassword
-	// 	) {
-	// 		newErrors.confirmPassword = "Passwords do not match";
-	// 	}
-
-	// 	if (!userData.nationality.trim()) {
-	// 		newErrors.nationality = "Select a country";
-	// 	}
-
-	// 	setErrors(newErrors);
-	// 	return Object.keys(newErrors).length === 0;
-	// };
-
-	// const onSignUpPress = async () => {
-	// 	try {
-	// 		console.log(userData);
-
-	// 		const data = {
-	// 			fullname: userData.name,
-	// 			email: userData.email,
-	// 			password: userData.password,
-	// 			mobileNo: userData.phone,
-	// 			nationality: selectedCountry,
-	// 		};
-
-	// 		console.log(data);
-
-	// 		if (!validateForm()) {
-	// 			console.log(errors);
-	// 			console.log("form not valid");
-	// 			return;
-	// 		}
-
-	// 		// API call
-	// 		const response = await fetch(`${BASE_URL}/auth/register`, {
-	// 			method: "POST",
-	// 			headers: {
-	// 				"Content-Type": "application/json",
-	// 			},
-	// 			body: JSON.stringify(data),
-	// 		});
-
-	// 		if (response.ok) {
-	// 			console.log("User created successfully", response);
-	// 			router.push({
-	// 				pathname: "/(auth)/Otp",
-	// 				params: { email: data.email },
-	// 			});
-	// 		} else {
-	// 			console.log("Failed to create user", response.json());
-	// 			router.push("/(auth)/SignUp");
-	// 		}
-	// 	} catch (error) {
-	// 		console.error("Error during sign-up process:", error);
-	// 	}
-	// };
-
-	const [state, setState] = useState("");
+	const [errors, setErrors] = useState<FormErrors>({
+		name: "",
+		email: "",
+		phone: "",
+		password: "",
+		confirmPassword: "",
+		nationality: "",
+	});
 
 	useEffect(() => {
 		const fetchCountries = async () => {
 			try {
+				// const response = await fetch(`${BASE_URL}/tmt/countries`);
 				const response = await fetch(
 					`http://88.222.212.112:8080/tmt/countries`,
 				);
 				const data = await response.json();
-				setState(JSON.stringify(data));
+				setCountries(data);
+				console.log("countries", countries);
 			} catch (error) {
 				console.error("Error fetching countries:", error);
 			}
 		};
 		fetchCountries();
 	}, []);
+
+	const validateForm = () => {
+		let newErrors: FormErrors = {};
+
+		if (!userData.name.trim()) {
+			newErrors.name = "Name is required";
+		} else if (userData.name.length < 3) {
+			newErrors.name = "Name must be at least 3 characters";
+		}
+
+		if (!userData.email.trim()) {
+			newErrors.email = "Email is required";
+		} else if (!/^\S+@\S+\.\S+$/.test(userData.email)) {
+			newErrors.email = "Invalid email format";
+		}
+
+		if (!userData.phone.trim()) {
+			newErrors.phone = "Phone Number is required";
+		} else if (userData.phone.length !== 10) {
+			newErrors.phone = "Phone Number must be 10 characters";
+		}
+
+		if (!userData.password.trim()) {
+			newErrors.password = "Password is required";
+		} else if (userData.password.length < 8) {
+			newErrors.password = "Password must be at least 8 characters";
+		} else if (
+			!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+				userData.password,
+			)
+		) {
+			newErrors.password =
+				"Password must contain at least 1 upper-case letter, 1 lower-case letter, 1 number, and 1 special character";
+		}
+
+		if (
+			userData.password !== userData.confirmPassword ||
+			!userData.confirmPassword
+		) {
+			newErrors.confirmPassword = "Passwords do not match";
+		}
+
+		if (!userData.nationality.trim()) {
+			newErrors.nationality = "Select a country";
+		}
+
+		setErrors(newErrors);
+		return Object.keys(newErrors).length === 0;
+	};
+
+	const onSignUpPress = async () => {
+		try {
+			console.log(userData);
+
+			const data = {
+				fullname: userData.name,
+				email: userData.email,
+				password: userData.password,
+				mobileNo: userData.phone,
+				nationality: selectedCountry,
+			};
+
+			console.log(data);
+
+			if (!validateForm()) {
+				console.log(errors);
+				console.log("form not valid");
+				return;
+			}
+
+			// API call
+			const response = await fetch(`${BASE_URL}/auth/register`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			});
+
+			if (response.ok) {
+				console.log("User created successfully", response);
+				router.push({
+					pathname: "/(auth)/Otp",
+					params: { email: data.email },
+				});
+			} else {
+				console.log("Failed to create user", response.json());
+				router.push("/(auth)/SignUp");
+			}
+		} catch (error) {
+			console.error("Error during sign-up process:", error);
+		}
+	};
 
 	return (
 		<SafeAreaView className="flex-1 bg-white">
@@ -174,7 +157,7 @@ export default function SignUp() {
 					<Text className="text-lg text-black font-JakartaBold">Back</Text>
 				</Link>
 			</View>
-			{/* <KeyboardingAvoidWrapper>
+			<KeyboardingAvoidWrapper>
 				<View className="w-full items-center ">
 					<Text className="text-3xl font-JakartaBold mb-2">Sign Up</Text>
 					<Text className="text-base text-gray-500">
@@ -225,11 +208,9 @@ export default function SignUp() {
 						}
 						errors={errors.confirmPassword}
 					/>
-
 					<View>
 						<Text className={`text-lg font-JakartaSemiBold mb-2`}>Country</Text>
 					</View>
-
 					<View className="border border-neutral-300 bg-neutral-100 focus:border-primary-500  rounded-full">
 						<Picker
 							className="w-full"
@@ -252,15 +233,12 @@ export default function SignUp() {
 					{errors.nationality && (
 						<Text className="text-red-500">{errors.nationality}</Text>
 					)}
-
 					<CustomButton
 						title="Sign Up"
 						onPress={onSignUpPress}
 						className="mt-4"
 					/>
-
-					{/* Login */}
-			{/* <Link
+					<Link
 						href="/(auth)/SignIn"
 						className="text-lg text-center text-general-200 mt-3"
 					>
@@ -268,13 +246,12 @@ export default function SignUp() {
 							Already have an account?
 						</Text>
 						<Text className="text-base text-primary-500"> Login</Text>
-					</Link> */}
-			{/* </View> */}
-			{/* <Link href="/Otp" className="text-lg text-center text-general-200 ">
+					</Link>
+				</View>
+				{/* <Link href="/Otp" className="text-lg text-center text-general-200 ">
 					<Text className="text-base text-primary-500"> Login</Text>
 				</Link> */}
-			{/* </KeyboardingAvoidWrapper> */}
-			<Text>{state}</Text>
+			</KeyboardingAvoidWrapper>
 		</SafeAreaView>
 	);
 }

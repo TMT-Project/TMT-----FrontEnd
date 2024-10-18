@@ -80,7 +80,7 @@ const CustomButton = ({
 		>
 			{IconLeft && <IconLeft />}
 			<Text
-				className={`text-2xl font-bold mr-3 ${getTextVariantStyle(
+				className={`text-2xl font-bold mr-3 text-center ${getTextVariantStyle(
 					textVariant,
 				)} `}
 			>
