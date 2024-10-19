@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Platform } from "react-native";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { responsiveFontSize } from "react-native-responsive-dimensions";
@@ -27,8 +27,22 @@ export default function TabBar({
 	};
 	return (
 		<View
-			className="flex flex-row justify-center items-center px-4 pb-1"
-			style={{}}
+			className="flex flex-row justify-center items-center px-4 pb-1 border-t border-neutral-400"
+			// style={{
+			// 	...(Platform.OS === "ios"
+			// 		? {
+			// 				shadowColor: "#000",
+			// 				shadowOffset: {
+			// 					width: 0,
+			// 					height: 10,
+			// 				},
+			// 				shadowOpacity: 0.51,
+			// 				shadowRadius: 13.16,
+			// 		  }
+			// 		: {
+			// 				elevation: 50,
+			// 		  }),
+			// }}
 		>
 			{state.routes.map((route, index) => {
 				const { options } = descriptors[route.key];

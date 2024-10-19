@@ -43,10 +43,10 @@ export default function SignUp() {
 	useEffect(() => {
 		const fetchCountries = async () => {
 			try {
-				// const response = await fetch(`${BASE_URL}/tmt/countries`);
-				const response = await fetch(
-					`http://88.222.212.112:8080/tmt/countries`,
-				);
+				const response = await fetch(`${BASE_URL}/tmt/countries`);
+				// const response = await fetch(
+				// 	`http://88.222.212.112:8080/tmt/countries`,
+				// );
 				const data = await response.json();
 				setCountries(data);
 				console.log("countries", countries);
