@@ -1,12 +1,24 @@
-import { View, Text, SafeAreaView, Alert } from "react-native";
+import { View, Text, Platform } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, router } from "expo-router";
 import InputField from "../../components/InputField";
 import CustomButton from "../../components/CustomButton";
 import KeyboardingAvoidWrapper from "../../components/KeyboardingAvoidWrapper";
 // import { BASE_URL } from "@env";
 import { FormErrors } from "@/types/type";
+import {
+	AntDesign,
+	Feather,
+	FontAwesome6,
+	Fontisto,
+	MaterialIcons,
+} from "@expo/vector-icons";
+import {
+	responsiveFontSize,
+	responsiveWidth,
+} from "react-native-responsive-dimensions";
+import SafeAreaWrapper from "@/components/SafeAreaWrapper";
 
 export default function SignUp() {
 	const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
@@ -19,6 +31,9 @@ export default function SignUp() {
 			name: string;
 		}[]
 	>([]);
+
+	const [showPassword, setShowPassword] = useState(false);
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 	const [selectedCountry, setSelectedCountry] = useState("");
 
@@ -151,21 +166,50 @@ export default function SignUp() {
 	};
 
 	return (
-		<SafeAreaView className="flex-1 bg-white">
-			<View className="w-full mt-5 flex flex-row items-center p-5">
-				<Link href="/(auth)/Initial">
-					<Text className="text-lg text-black font-JakartaBold">Back</Text>
-				</Link>
-			</View>
+		<SafeAreaWrapper>
 			<KeyboardingAvoidWrapper>
-				<View className="w-full items-center ">
-					<Text className="text-3xl font-JakartaBold mb-2">Sign Up</Text>
-					<Text className="text-base text-gray-500">
+				<View
+					className="w-full flex flex-row items-center"
+					style={{
+						marginTop: responsiveWidth(1),
+						padding: responsiveWidth(5),
+					}}
+				>
+					<Link href="/(auth)/Initial">
+						<FontAwesome6 name="arrow-left-long" size={20} color="#737373" />
+					</Link>
+				</View>
+
+				<View
+					className="w-full items-center"
+					style={{
+						marginBottom: responsiveWidth(5),
+					}}
+				>
+					<Text
+						style={{
+							fontSize: responsiveFontSize(3),
+							marginBottom: responsiveWidth(2),
+						}}
+					>
+						Sign Up
+					</Text>
+					<Text
+						className="text-gray-500"
+						style={{
+							fontSize: responsiveFontSize(1.8),
+						}}
+					>
 						Create an account to start your journey
 					</Text>
 				</View>
 
-				<View className="px-5 pt-2 mb-10 w-full">
+				<View
+					className="w-full  flex justify-center items-center"
+					style={{
+						paddingHorizontal: responsiveWidth(3),
+					}}
+				>
 					<InputField
 						label="Name"
 						required={true}
@@ -173,6 +217,9 @@ export default function SignUp() {
 						value={userData.name}
 						onChangeText={(value) => setUserData({ ...userData, name: value })}
 						errors={errors.name}
+						LeftIcon={(style: any) => (
+							<AntDesign name="user" size={24} color="black" style={style} />
+						)}
 					/>
 					<InputField
 						label="Email"
@@ -180,6 +227,9 @@ export default function SignUp() {
 						value={userData.email}
 						onChangeText={(value) => setUserData({ ...userData, email: value })}
 						errors={errors.email}
+						LeftIcon={(style: any) => (
+							<Fontisto name="email" size={24} color="black" />
+						)}
 					/>
 					<InputField
 						label="Phone Number"
@@ -187,71 +237,151 @@ export default function SignUp() {
 						value={userData.phone}
 						onChangeText={(value) => setUserData({ ...userData, phone: value })}
 						errors={errors.phone}
+						LeftIcon={(style: any) => (
+							<Feather name="phone" size={24} color="black" />
+						)}
+						keyBoardType={
+							Platform.OS === "android" ? "phone-pad" : "name-phone-pad"
+						}
 					/>
 					<InputField
 						label="Password"
 						placeholder="Enter your password"
-						secureTextEntry
+						secureTextEntry={showPassword}
 						value={userData.password}
 						onChangeText={(value) =>
 							setUserData({ ...userData, password: value })
 						}
 						errors={errors.password}
+						LeftIcon={(style: any) => (
+							<MaterialIcons name="lock-outline" size={24} color="black" />
+						)}
+						RightIcon={(style: any) => (
+							<Feather
+								name={showPassword ? "eye-off" : "eye"}
+								size={24}
+								color="black"
+								onPress={() => setShowPassword(!showPassword)}
+							/>
+						)}
 					/>
 					<InputField
 						label="Confirm Password"
 						placeholder="Confirm your password"
-						secureTextEntry
+						secureTextEntry={showConfirmPassword}
 						value={userData.confirmPassword}
 						onChangeText={(value) =>
 							setUserData({ ...userData, confirmPassword: value })
 						}
 						errors={errors.confirmPassword}
+						LeftIcon={(style: any) => (
+							<MaterialIcons name="lock-outline" size={24} color="black" />
+						)}
+						RightIcon={(style: any) => (
+							<Feather
+								name={showConfirmPassword ? "eye-off" : "eye"}
+								size={24}
+								color="black"
+								onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+							/>
+						)}
 					/>
-					<View>
-						<Text className={`text-lg font-JakartaSemiBold mb-2`}>Country</Text>
+					<View className="w-full">
+						<View>
+							<Text
+								style={{
+									fontSize: responsiveFontSize(2),
+									marginVertical: responsiveWidth(1.5),
+								}}
+							>
+								Country
+							</Text>
+						</View>
+						{/* TODO: Add Flag Icon */}
+						<View className="border border-neutral-300 bg-neutral-100 focus:border-primary-500  rounded-full">
+							<Picker
+								className="w-full"
+								selectedValue={selectedCountry}
+								onValueChange={(value) => {
+									setSelectedCountry(value);
+									console.log(value);
+								}}
+							>
+								<Picker.Item label="-- Select Country --" value="" />
+								{countries.map((con, index) => (
+									<Picker.Item
+										key={index}
+										label={con.name + " - " + con.code}
+										value={con.name}
+									/>
+								))}
+							</Picker>
+						</View>
+						{errors.nationality && (
+							<Text className="text-red-500">{errors.nationality}</Text>
+						)}
 					</View>
-					<View className="border border-neutral-300 bg-neutral-100 focus:border-primary-500  rounded-full">
-						<Picker
-							className="w-full"
-							selectedValue={selectedCountry}
-							onValueChange={(value) => {
-								setSelectedCountry(value);
-								console.log(value);
-							}}
-						>
-							<Picker.Item label="-- Select Country --" value="" />
-							{countries.map((con, index) => (
-								<Picker.Item
-									key={index}
-									label={con.name + " - " + con.code}
-									value={con.name}
-								/>
-							))}
-						</Picker>
-					</View>
-					{errors.nationality && (
-						<Text className="text-red-500">{errors.nationality}</Text>
-					)}
-					<CustomButton
-						title="Sign Up"
-						onPress={onSignUpPress}
-						className="mt-4"
-					/>
-					<Link
-						href="/(auth)/SignIn"
-						className="text-lg text-center text-general-200 mt-3"
+
+					<View
+						style={{
+							marginTop: responsiveWidth(5),
+						}}
 					>
-						<Text className="text-base text-center text-gray-500">
-							Already have an account?
-						</Text>
-						<Text className="text-base text-primary-500"> Login</Text>
-					</Link>
+						<CustomButton
+							title="Sign Up"
+							onPress={onSignUpPress}
+							width={responsiveWidth(95)}
+							disabled={
+								userData.name === "" ||
+								userData.email === "" ||
+								userData.phone === "" ||
+								userData.password === "" ||
+								userData.confirmPassword === "" ||
+								selectedCountry === ""
+							}
+							bgVariant={
+								userData.name === "" ||
+								userData.email === "" ||
+								userData.phone === "" ||
+								userData.password === "" ||
+								userData.confirmPassword === "" ||
+								selectedCountry === ""
+									? "secondary"
+									: "default"
+							}
+						/>
+					</View>
 				</View>
-				{/* <Link href="/Otp" className="text-lg text-center text-general-200 ">
+				<Link
+					href="/(auth)/SignIn"
+					className="text-center text-general-200"
+					style={{
+						marginTop: responsiveWidth(2.5),
+						marginBottom: responsiveWidth(5),
+					}}
+				>
+					<Text
+						className="text-center text-gray-500"
+						style={{
+							fontSize: responsiveFontSize(1.8),
+						}}
+					>
+						Already have an account?
+					</Text>
+					<Text
+						className="text-primary font-bold"
+						style={{
+							fontSize: responsiveFontSize(1.8),
+						}}
+					>
+						{" "}
+						Login
+					</Text>
+				</Link>
+			</KeyboardingAvoidWrapper>
+			{/* <Link href="/Otp" className="text-lg text-center text-general-200 ">
 					<Text className="text-base text-primary-500"> Login</Text>
 				</Link> */}
-			</KeyboardingAvoidWrapper>
-		</SafeAreaView>
+		</SafeAreaWrapper>
 	);
 }

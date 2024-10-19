@@ -1,11 +1,15 @@
-import { View, Text, Image, TextInput } from "react-native";
-import React from "react";
+import { View, Text, TextInput, Platform } from "react-native";
 import { InputFieldProps } from "../types/type";
+import {
+	responsiveFontSize,
+	responsiveWidth,
+} from "react-native-responsive-dimensions";
 
 const InputField = ({
 	label,
 	labelStyle,
-	icon,
+	RightIcon,
+	LeftIcon,
 	secureTextEntry = false,
 	inputContainerStyle,
 	containerStyle,
@@ -15,35 +19,63 @@ const InputField = ({
 	errors,
 	placeholder,
 	value,
+	keyBoardType = Platform.OS == "android" ? "default" : "ascii-capable",
 	...props
 }: InputFieldProps) => {
 	return (
-		<View className={"w-full my-1 " + containerStyle}>
+		<View
+			className={"w-full " + containerStyle}
+			style={{
+				marginVertical: responsiveWidth(1.5),
+			}}
+		>
 			{label && (
-				<Text className={`text-lg font-JakartaSemiBold mb-2 ${labelStyle}`}>
+				<Text
+					className={labelStyle}
+					style={{
+						fontSize: responsiveFontSize(2),
+						marginVertical: responsiveWidth(1.5),
+					}}
+				>
 					{label}
 				</Text>
 			)}
 			<View
 				className={`flex flex-row justify-start items-center relative bg-neutral-100 border border-neutral-300 focus:border-primary-500 rounded-3xl ${inputContainerStyle}`}
 			>
-				{icon && (
-					<Image source={icon} className={`w-6 h-6 ml-4 ${iconStyle}`} />
+				{LeftIcon && (
+					<View
+						style={{
+							marginLeft: responsiveWidth(5),
+						}}
+					>
+						<LeftIcon />
+					</View>
 				)}
 				<TextInput
-					className={`rounded-lg p-3 font-JakartaSemiBold text-[14px] flex-1 text-left ${inputStyle}`}
+					className={`rounded-lg flex-1 text-left ${inputStyle}`}
 					secureTextEntry={secureTextEntry}
-					// required={required}
 					placeholder={placeholder}
 					value={value}
 					{...props}
+					style={{
+						paddingVertical: responsiveWidth(3),
+						paddingHorizontal: responsiveWidth(5),
+						fontSize: responsiveFontSize(2),
+					}}
+					keyboardType={keyBoardType}
 				/>
+				{RightIcon && (
+					<View
+						style={{
+							marginRight: responsiveWidth(5),
+						}}
+					>
+						<RightIcon />
+					</View>
+				)}
 			</View>
-			{errors && (
-				<Text className="text-red-500 text-base font-JakartaSemiBold">
-					{errors}
-				</Text>
-			)}
+			{errors && <Text className=" text-base text-red-500 ">{errors}</Text>}
 		</View>
 	);
 };

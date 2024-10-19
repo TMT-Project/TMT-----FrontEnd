@@ -1,4 +1,4 @@
-import { TextInputProps, TouchableOpacityProps } from "react-native";
+import { KeyboardTypeOptions, TextInputProps, TouchableOpacityProps } from "react-native";
 
 declare interface ButtonProps extends TouchableOpacityProps {
 	title: string;
@@ -11,7 +11,8 @@ declare interface ButtonProps extends TouchableOpacityProps {
 
 declare interface InputFieldProps extends TextInputProps {
 	label?: string;
-	icon?: any;
+	RightIcon?: React.FC | undefined;
+	LeftIcon?: React.FC | undefined;
 	secureTextEntry?: boolean;
 	labelStyle?: string;
 	inputContainerStyle?: string;
@@ -22,6 +23,7 @@ declare interface InputFieldProps extends TextInputProps {
 	required?: boolean;
 	errors?: any;
 	placeholder?: string;
+	keyBoardType?: KeyboardTypeOptions ;
 }
 
 type FormErrors = {
