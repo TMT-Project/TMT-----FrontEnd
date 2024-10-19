@@ -1,5 +1,10 @@
 import { Text, TouchableOpacity, ButtonProps } from "react-native";
 import React from "react";
+import {
+	responsiveHeight,
+	responsiveWidth,
+	responsiveFontSize,
+} from "react-native-responsive-dimensions";
 
 type BgVariantProps =
 	| "primary"
@@ -73,16 +78,20 @@ const CustomButton = ({
 			activeOpacity={0.5}
 			onPress={onPress}
 			disabled={disabled}
-			className={`w-full mb-3 p-3 rounded-full flex flex-row justify-center items-end shadow-md shadow-neutral-400/70 ${getBgVariantStyle(
+			className={` rounded-full flex flex-row justify-center items-end box-shadow-md shadow-neutral-400/70 ${getBgVariantStyle(
 				bgVariant,
 			)}  ${className}`}
 			{...props}
+			style={{
+				width: responsiveWidth(95),
+				margin: responsiveWidth(5),
+				padding: responsiveHeight(1.5),
+			}}
 		>
 			{IconLeft && <IconLeft />}
 			<Text
-				className={`text-2xl font-bold mr-3 text-center ${getTextVariantStyle(
-					textVariant,
-				)} `}
+				className={`font-bold mr-3 ${getTextVariantStyle(textVariant)} `}
+				style={{ fontSize: responsiveFontSize(2.5) }}
 			>
 				{title}
 			</Text>
