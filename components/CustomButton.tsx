@@ -24,12 +24,13 @@ type TextVariantProps =
 type CustomButtonProps = {
 	bgVariant?: BgVariantProps;
 	textVariant?: TextVariantProps;
-	className: string;
+	className?: string;
 	disabled?: boolean;
 	IconLeft?: React.FC | undefined;
 	IconRight?: React.FC | undefined;
 	onPress: () => void;
 	title: string;
+	width?: number;
 };
 
 const getBgVariantStyle = (variant: BgVariantProps) => {
@@ -71,6 +72,7 @@ const CustomButton = ({
 	IconRight = undefined,
 	disabled = false,
 	className,
+	width = responsiveWidth(85),
 	...props
 }: CustomButtonProps) => {
 	return (
@@ -83,15 +85,15 @@ const CustomButton = ({
 			)}  ${className}`}
 			{...props}
 			style={{
-				width: responsiveWidth(95),
-				margin: responsiveWidth(5),
-				padding: responsiveHeight(1.5),
+				width: width,
+				// margin: responsiveWidth(7),
+				padding: responsiveHeight(1.3),
 			}}
 		>
 			{IconLeft && <IconLeft />}
 			<Text
-				className={`font-bold mr-3 ${getTextVariantStyle(textVariant)} `}
-				style={{ fontSize: responsiveFontSize(2.5) }}
+				className={`font-bold ${getTextVariantStyle(textVariant)} `}
+				style={{ fontSize: responsiveFontSize(2.5), marginHorizontal: 10 }}
 			>
 				{title}
 			</Text>

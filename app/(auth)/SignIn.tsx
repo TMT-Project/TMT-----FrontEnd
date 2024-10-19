@@ -1,10 +1,23 @@
-import { View, Text, ScrollView, SafeAreaView } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import React, { useState } from "react";
 import { Link, router } from "expo-router";
 import InputField from "../../components/InputField";
 import CustomButton from "../../components/CustomButton";
 // import { BASE_URL } from "@env";
 import { FormErrors } from "@/types/type";
+import { SafeAreaView } from "react-native-safe-area-context";
+import SafeAreaWrapper from "@/components/SafeAreaWrapper";
+import {
+	responsiveFontSize,
+	responsiveWidth,
+} from "react-native-responsive-dimensions";
+import {
+	Feather,
+	FontAwesome6,
+	Fontisto,
+	MaterialIcons,
+} from "@expo/vector-icons";
+import KeyboardingAvoidWrapper from "@/components/KeyboardingAvoidWrapper";
 
 export default function SignIn() {
 	const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
@@ -17,6 +30,8 @@ export default function SignIn() {
 		email: "",
 		password: "",
 	});
+
+	const [showPassword, setShowPassword] = useState(false);
 
 	const validateForm = () => {
 		let newErrors: FormErrors = {};
@@ -86,66 +101,138 @@ export default function SignIn() {
 	};
 
 	return (
-		<SafeAreaView className="flex-1 bg-white">
-			<View className="w-full mt-5 flex flex-row items-center p-5">
-				<Link href="/(auth)/Welcome">
-					<Text className="text-lg text-black font-JakartaBold">Back</Text>
-				</Link>
-			</View>
-			<View className="w-full items-center ">
-				<Text className="text-3xl font-JakartaBold mb-2">Sign In</Text>
-				<Text className="text-base text-gray-500">
-					Log in to start your journey
-				</Text>
-			</View>
-			<View className="px-5 pt-2 w-full">
-				<InputField
-					label="Email"
-					placeholder="Enter your email"
-					value={userData.email}
-					errors={errors.email}
-					onChangeText={(value) => setUserData({ ...userData, email: value })}
-				/>
-				<InputField
-					label="Password"
-					placeholder="Enter your password"
-					secureTextEntry
-					errors={errors.password}
-					value={userData.password}
-					onChangeText={(value) =>
-						setUserData({ ...userData, password: value })
-					}
-				/>
-				<CustomButton
-					title="Sign In"
-					onPress={onSignInPress}
-					disabled={false}
-					className="mt-4"
-					// IconLeft=""
-					// IconRight=""
-				/>
-
-				{/* Sign in */}
-				<Link
-					href="/(auth)/SignUp"
-					className="text-lg text-center text-general-200 "
+		<SafeAreaWrapper>
+			<KeyboardingAvoidWrapper>
+				<View
+					className="w-full flex flex-row items-center"
+					style={{
+						marginTop: responsiveWidth(1),
+						padding: responsiveWidth(5),
+					}}
 				>
-					<Text className="text-base text-center text-gray-500">
-						Create an account{" "}
+					<Link href="/(auth)/Initial">
+						<FontAwesome6 name="arrow-left-long" size={20} color="#737373" />
+					</Link>
+				</View>
+				<View className="w-full items-center ">
+					<Text
+						style={{
+							fontSize: responsiveFontSize(3),
+							marginBottom: responsiveWidth(2),
+						}}
+					>
+						Sign In
 					</Text>
-					<Text className="text-base text-primary-500">Sign in</Text>
-				</Link>
-				{/* Sign in */}
-				<Link
-					href="/(auth)/Otp"
-					className="text-lg text-center text-general-200 "
+					<Text
+						className="text-gray-500"
+						style={{
+							fontSize: responsiveFontSize(1.8),
+						}}
+					>
+						Log in to start your journey
+					</Text>
+				</View>
+				<View
+					className="w-full  flex justify-center items-center"
+					style={{
+						paddingHorizontal: responsiveWidth(3),
+					}}
 				>
-					{/* <Text className="text-base text-center text-gray-500">
-            Create an account{" "}
-          </Text> */}
-					<Text className="text-base text-primary-500">Forget Password</Text>
-				</Link>
-			</View>
-		</SafeAreaView>
+					<InputField
+						label="Email"
+						placeholder="Enter your email"
+						value={userData.email}
+						onChangeText={(value) => setUserData({ ...userData, email: value })}
+						errors={errors.email}
+						LeftIcon={(style: any) => (
+							<Fontisto name="email" size={24} color="black" />
+						)}
+					/>
+					<InputField
+						label="Password"
+						placeholder="Enter your password"
+						secureTextEntry={showPassword}
+						value={userData.password}
+						onChangeText={(value) =>
+							setUserData({ ...userData, password: value })
+						}
+						errors={errors.password}
+						LeftIcon={(style: any) => (
+							<MaterialIcons name="lock-outline" size={24} color="black" />
+						)}
+						RightIcon={(style: any) => (
+							<Feather
+								name={showPassword ? "eye-off" : "eye"}
+								size={24}
+								color="black"
+								onPress={() => setShowPassword(!showPassword)}
+							/>
+						)}
+					/>
+					<View
+						style={{
+							marginTop: responsiveWidth(5),
+						}}
+					>
+						<CustomButton
+							title="Sign In"
+							onPress={onSignInPress}
+							disabled={userData.email === "" || userData.password === ""}
+							width={responsiveWidth(95)}
+							bgVariant={
+								userData.email === "" || userData.password === ""
+									? "secondary"
+									: "default"
+							}
+						/>
+					</View>
+
+					{/* Sign in */}
+					<Link
+						href="/(auth)/SignUp"
+						className="text-center text-general-200"
+						style={{
+							marginTop: responsiveWidth(2.5),
+							// marginBottom: responsiveWidth(5),
+						}}
+					>
+						<Text
+							className="text-center text-gray-500"
+							style={{
+								fontSize: responsiveFontSize(1.8),
+							}}
+						>
+							Create an account{" "}
+						</Text>
+						<Text
+							className="text-primary font-bold"
+							style={{
+								fontSize: responsiveFontSize(1.8),
+							}}
+						>
+							Sign in
+						</Text>
+					</Link>
+					{/* Sign in */}
+					<Link
+						href="/(auth)/Otp"
+						className="text-center text-general-200"
+						style={{
+							marginTop: responsiveWidth(2.5),
+							marginBottom: responsiveWidth(5),
+						}}
+					>
+						<Text
+							className="text-secondary-200 font-bold"
+							style={{
+								fontSize: responsiveFontSize(1.8),
+							}}
+						>
+							Forget Password
+						</Text>
+					</Link>
+				</View>
+			</KeyboardingAvoidWrapper>
+		</SafeAreaWrapper>
 	);
 }

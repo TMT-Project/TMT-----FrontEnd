@@ -26,18 +26,21 @@ export default function Welcome() {
 	};
 
 	return (
-		<SafeAreaView className="flex h-full items-center justify-between bg-white">
+		<SafeAreaView className="flex h-full items-center justify-between bg-amber-200">
 			<TouchableOpacity
 				onPress={() => {
 					router.push("/(root)/(tabs)/Home");
 				}}
 				className="w-full flex justify-end items-end p-5"
 			>
-				<Text className="text-xl text-black/70 font-JakartaBold underline">
-					skip{" "}
-				</Text>
+				<Text className="text-xl text-black/70 font-bold">skip </Text>
 			</TouchableOpacity>
-			<View className="flex-1 flex flex-row items-center justify-center">
+			<View
+				className="flex-1 flex flex-row items-center justify-center"
+				style={{
+					paddingVertical: responsiveHeight(5),
+				}}
+			>
 				<Swiper
 					ref={swiperRef}
 					loop={false}
@@ -63,11 +66,12 @@ export default function Welcome() {
 						/>
 					}
 					onIndexChanged={(index) => setActiveIndex(index)}
+					className="flex justify-center items-center pt-20"
 				>
 					{onboarding.map((item, index) => (
 						<View
 							key={index}
-							className="flex items-center justify-center"
+							className="flex items-center justify-center "
 							style={{
 								marginHorizontal: responsiveWidth(2),
 								padding: responsiveWidth(4),
@@ -84,7 +88,12 @@ export default function Welcome() {
 								}}
 							/>
 							<View className="flex flex-row items-center justify-center w-full mt-10">
-								<Text className="text-3xl text-black font-bold mx-10 text-center">
+								<Text
+									className=" text-black font-bold mx-10 text-center"
+									style={{
+										fontSize: responsiveFontSize(3),
+									}}
+								>
 									{item.title}
 								</Text>
 							</View>
@@ -95,19 +104,24 @@ export default function Welcome() {
 					))}
 				</Swiper>
 			</View>
-
-			<CustomButton
-				title={isLastSlide ? "Get Started" : "Next"}
-				className="w-11/12 mt-10 transition-all duration-1000 ease-in-out"
-				onPress={handleNext}
-				IconRight={() => (
-					<FontAwesome6
-						name="arrow-right-long"
-						size={responsiveFontSize(3)}
-						color="white"
-					/>
-				)}
-			/>
+			<View
+				style={{
+					paddingVertical: responsiveHeight(5),
+				}}
+			>
+				<CustomButton
+					title={isLastSlide ? "Get Started" : "Next"}
+					className="w-11/12 mt-10 transition-all duration-1000 ease-in-out"
+					onPress={handleNext}
+					IconRight={() => (
+						<FontAwesome6
+							name="arrow-right-long"
+							size={responsiveFontSize(3)}
+							color="white"
+						/>
+					)}
+				/>
+			</View>
 		</SafeAreaView>
 	);
 }

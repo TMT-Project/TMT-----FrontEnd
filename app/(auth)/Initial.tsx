@@ -3,6 +3,10 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
+import {
+	responsiveHeight,
+	responsiveWidth,
+} from "react-native-responsive-dimensions";
 
 export default function Initial() {
 	return (
@@ -12,16 +16,21 @@ export default function Initial() {
 					<Text className="text-lg text-black font-JakartaBold">Back</Text>
 				</Link>
 			</View>
-			<View className="flex flex-row items-end justify-center gap-2 p-5">
+			<View
+				className="flex flex-row items-center justify-evenly"
+				style={{
+					marginVertical: responsiveHeight(3),
+				}}
+			>
 				<CustomButton
 					title="Sign Up"
 					onPress={() => router.push("/(auth)/SignUp")}
-					className="mt-4 w-1/2"
+					width={responsiveWidth(45)}
 				/>
 				<CustomButton
 					onPress={() => router.push("/(auth)/SignIn")}
 					title="Sign In"
-					className="mt-4 w-1/2"
+					width={responsiveWidth(45)}
 				/>
 			</View>
 		</SafeAreaView>
