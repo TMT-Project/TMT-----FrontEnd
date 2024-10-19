@@ -10,6 +10,8 @@ import { FormErrors } from "@/types/type";
 
 export default function SignUp() {
 	const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
+	console.log(BASE_URL);
+
 	const [countries, setCountries] = useState<
 		{
 			code: string;
@@ -42,6 +44,9 @@ export default function SignUp() {
 		const fetchCountries = async () => {
 			try {
 				const response = await fetch(`${BASE_URL}/tmt/countries`);
+				// const response = await fetch(
+				// 	`http://88.222.212.112:8080/tmt/countries`,
+				// );
 				const data = await response.json();
 				setCountries(data);
 				console.log("countries", countries);
@@ -203,11 +208,9 @@ export default function SignUp() {
 						}
 						errors={errors.confirmPassword}
 					/>
-
 					<View>
 						<Text className={`text-lg font-JakartaSemiBold mb-2`}>Country</Text>
 					</View>
-
 					<View className="border border-neutral-300 bg-neutral-100 focus:border-primary-500  rounded-full">
 						<Picker
 							className="w-full"
@@ -230,14 +233,11 @@ export default function SignUp() {
 					{errors.nationality && (
 						<Text className="text-red-500">{errors.nationality}</Text>
 					)}
-
 					<CustomButton
 						title="Sign Up"
 						onPress={onSignUpPress}
 						className="mt-4"
 					/>
-
-					{/* Login */}
 					<Link
 						href="/(auth)/SignIn"
 						className="text-lg text-center text-general-200 mt-3"

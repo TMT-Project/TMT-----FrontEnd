@@ -1,10 +1,6 @@
 import { View, Text, Image, TextInput } from "react-native";
 import React from "react";
 import { InputFieldProps } from "../types/type";
-import {
-	widthPercentageToDP as wp,
-	heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
 
 const InputField = ({
 	label,
@@ -18,6 +14,7 @@ const InputField = ({
 	iconStyle,
 	errors,
 	placeholder,
+	value,
 	...props
 }: InputFieldProps) => {
 	return (
@@ -38,6 +35,7 @@ const InputField = ({
 					secureTextEntry={secureTextEntry}
 					// required={required}
 					placeholder={placeholder}
+					value={value}
 					{...props}
 				/>
 			</View>
