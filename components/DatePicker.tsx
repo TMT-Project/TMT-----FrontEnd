@@ -4,6 +4,7 @@ import DateTimePicker, {
 	DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 import InputField from "./InputField";
+import { Fontisto, Ionicons } from "@expo/vector-icons";
 
 export default function DatePicker({
 	onChange,
@@ -70,7 +71,10 @@ export default function DatePicker({
 					value={date.toDateString()}
 					editable={false}
 					errors={error}
-				></InputField>
+					LeftIcon={() => (
+						<Ionicons name="calendar-clear" size={24} color="#0286FF" />
+					)}
+				/>
 			</Pressable>
 
 			{showPicker && (

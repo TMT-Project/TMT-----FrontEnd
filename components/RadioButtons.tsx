@@ -1,6 +1,10 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import {
+	responsiveFontSize,
+	responsiveWidth,
+} from "react-native-responsive-dimensions";
 
 type RadioButtonsProps = {
 	currentOption: string;
@@ -44,11 +48,19 @@ export default function RadioButtons({
 					}}
 				>
 					{currentOption === option ? (
-						<Ionicons name="radio-button-on-sharp" size={24} color="black" />
+						<Ionicons name="radio-button-on-sharp" size={24} color="#0286FF" />
 					) : (
-						<Ionicons name="radio-button-off-sharp" size={24} color="black" />
+						<Ionicons name="radio-button-off-sharp" size={24} color="#0286FF" />
 					)}
-					<Text className={textStyle}>{option}</Text>
+					<Text
+						className={textStyle}
+						style={{
+							fontSize: responsiveFontSize(2),
+							marginLeft: responsiveWidth(1.5),
+						}}
+					>
+						{option}
+					</Text>
 				</TouchableOpacity>
 			))}
 		</View>

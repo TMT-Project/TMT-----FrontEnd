@@ -1,6 +1,5 @@
-import { View, Text, Modal, Button } from "react-native";
-import React, { useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Text, Modal } from "react-native";
+import { useState } from "react";
 import RadioButtons from "@/components/RadioButtons";
 import DatePicker from "@/components/DatePicker";
 import KeyboardingAvoidWrapper from "@/components/KeyboardingAvoidWrapper";
@@ -10,6 +9,8 @@ import {
 	responsiveFontSize,
 	responsiveWidth,
 } from "react-native-responsive-dimensions";
+import SafeAreaWrapper from "@/components/SafeAreaWrapper";
+import { FontAwesome, FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 
 type RegisterErrors = {
 	flightNumber?: string;
@@ -106,16 +107,50 @@ export default function Register() {
 	}
 
 	return (
-		<SafeAreaView className="flex h-full items-center p-3 pt-5 ">
-			<View className="flex flex-col items-center justify-center gap-2 mb-5">
-				<Text className="text-3xl">Register</Text>
-				<Text className="text-lg">Register your Trip here</Text>
-			</View>
-
+		<SafeAreaWrapper>
 			<KeyboardingAvoidWrapper>
-				<View className="w-full">
+				<View
+					className="w-full items-center"
+					style={{
+						marginTop: responsiveWidth(10),
+						marginBottom: responsiveWidth(6),
+					}}
+				>
+					<Text
+						style={{
+							fontSize: responsiveFontSize(3),
+							marginBottom: responsiveWidth(2),
+						}}
+						className="text-primary-500 font-bold"
+					>
+						Register
+					</Text>
+					<Text
+						className="text-gray-500"
+						style={{
+							fontSize: responsiveFontSize(1.8),
+						}}
+					>
+						Register your Trip here
+					</Text>
+				</View>
+
+				<View
+					className="w-full  flex justify-center items-center"
+					style={{
+						paddingHorizontal: responsiveWidth(3),
+					}}
+				>
 					<View className="flex flex-row mb-2 justify-between items-center w-full">
-						<Text className="text-xl font-medium">Service</Text>
+						<Text
+							className="font-medium"
+							style={{
+								fontSize: responsiveFontSize(2.5),
+								marginVertical: responsiveWidth(1.5),
+							}}
+						>
+							Service
+						</Text>
 						<RadioButtons
 							currentOption={option}
 							setOption={setOption}
@@ -127,16 +162,29 @@ export default function Register() {
 							onChanged={(value) => handleChange("serviceType", value)}
 						/>
 					</View>
-					<View className="w-full mb-2">
+					<View
+						className="w-full"
+						style={{
+							marginBottom: responsiveWidth(2),
+						}}
+					>
 						<InputField
 							placeholder="Flight Number"
 							label="Flight Number"
 							onChangeText={(text) => handleChange("flightNumber", text)}
 							errors={errors.flightNumber}
 							value={registerInfo.flightNumber}
+							LeftIcon={() => (
+								<MaterialIcons name="flight" size={24} color="#0286FF" />
+							)}
 						/>
 					</View>
-					<View className="w-full mb-2">
+					<View
+						className="w-full"
+						style={{
+							marginBottom: responsiveWidth(2),
+						}}
+					>
 						<DatePicker
 							onChange={(date) => {
 								setRegisterInfo({ ...registerInfo, date: date.toDateString() });
@@ -145,27 +193,50 @@ export default function Register() {
 							value={registerInfo.date}
 						/>
 					</View>
-					<View className={"w-full mb-2 flex justify-between"}>
+					<View
+						className="w-full"
+						style={{
+							marginBottom: responsiveWidth(2),
+						}}
+					>
 						<InputField
 							placeholder="Source"
 							label="From"
 							editable={false}
 							onChangeText={(text) => handleChange("from", text)}
 							value={registerInfo.from}
-							// errors={errors.from}
+							LeftIcon={() => (
+								<MaterialIcons
+									name="flight-takeoff"
+									size={24}
+									color="#0286FF"
+								/>
+							)}
 						/>
 					</View>
-					<View className="w-full mb-2">
+					<View
+						className="w-full"
+						style={{
+							marginBottom: responsiveWidth(2),
+						}}
+					>
 						<InputField
 							placeholder="Destination"
 							label="To"
 							editable={false}
 							onChangeText={(text) => handleChange("to", text)}
 							value={registerInfo.to}
-							// errors={errors.to}
+							LeftIcon={() => (
+								<MaterialIcons name="flight-land" size={24} color="#0286FF" />
+							)}
 						/>
 					</View>
-					<View className="w-full mb-2 flex justify-between">
+					<View
+						className="w-full"
+						style={{
+							marginBottom: responsiveWidth(2),
+						}}
+					>
 						<InputField
 							placeholder="Weight in Kg"
 							label="Weight"
@@ -173,25 +244,40 @@ export default function Register() {
 							onChangeText={(text) => handleChange("weight", text)}
 							errors={errors.weight}
 							value={registerInfo.weight}
+							LeftIcon={() => (
+								<FontAwesome6 name="weight-hanging" size={24} color="#0286FF" />
+							)}
 						/>
 					</View>
-					<View className="w-full mb-2">
+					<View
+						className="w-full"
+						style={{
+							marginBottom: responsiveWidth(2),
+						}}
+					>
 						<InputField
 							placeholder="Enter PNR Number"
 							label="PNR Number"
 							onChangeText={(text) => handleChange("pnrNumber", text)}
 							errors={errors.pnrNumber}
 							value={registerInfo.pnrNumber}
+							LeftIcon={() => (
+								<FontAwesome name="ticket" size={24} color="#0286FF" />
+							)}
 						/>
 					</View>
-					{/* <View className="h-[240px] mb-3 w-full border-2 border-dashed flex justify-center items-center">
-						<Text className="text-3xl">Upload Image +</Text>
-					</View> */}
-					<CustomButton
-						title="Register"
-						onPress={handleRegister}
-						className={""}
-					/>
+
+					<View
+						style={{
+							marginVertical: responsiveWidth(5),
+						}}
+					>
+						<CustomButton
+							title="Register"
+							onPress={handleRegister}
+							width={responsiveWidth(95)}
+						/>
+					</View>
 				</View>
 			</KeyboardingAvoidWrapper>
 
@@ -202,15 +288,19 @@ export default function Register() {
 			>
 				<View className="flex justify-center items-center h-full">
 					<View
-						className="flex items-center justify-center gap-y-10 border border-black rounded-3xl p-3"
+						className="flex items-center justify-center border border-black rounded-3xl"
 						style={{
 							width: responsiveWidth(80),
+							paddingHorizontal: responsiveWidth(3),
+							paddingVertical: responsiveWidth(5),
+							rowGap: responsiveWidth(5),
 						}}
 					>
 						<Text
 							style={{
-								fontSize: responsiveFontSize(2.5),
+								fontSize: responsiveFontSize(2.4),
 								fontWeight: "medium",
+								textAlign: "center",
 							}}
 						>
 							Trip Registered Successfully
@@ -221,11 +311,11 @@ export default function Register() {
 								setModalVisible(false);
 								resetForm();
 							}}
-							className="w-1/2"
+							width={responsiveWidth(40)}
 						/>
 					</View>
 				</View>
 			</Modal>
-		</SafeAreaView>
+		</SafeAreaWrapper>
 	);
 }
