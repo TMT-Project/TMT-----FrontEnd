@@ -1,11 +1,10 @@
-import { View, Text, ScrollView } from "react-native";
-import React, { useState } from "react";
+import { View, Text } from "react-native";
+import { useState } from "react";
 import { Link, router } from "expo-router";
 import InputField from "../../components/InputField";
 import CustomButton from "../../components/CustomButton";
 // import { BASE_URL } from "@env";
 import { FormErrors } from "@/types/type";
-import { SafeAreaView } from "react-native-safe-area-context";
 import SafeAreaWrapper from "@/components/SafeAreaWrapper";
 import {
 	responsiveFontSize,
@@ -120,6 +119,7 @@ export default function SignIn() {
 							fontSize: responsiveFontSize(3),
 							marginBottom: responsiveWidth(2),
 						}}
+						className="text-primary-500 font-bold"
 					>
 						Sign In
 					</Text>
@@ -145,7 +145,7 @@ export default function SignIn() {
 						onChangeText={(value) => setUserData({ ...userData, email: value })}
 						errors={errors.email}
 						LeftIcon={(style: any) => (
-							<Fontisto name="email" size={24} color="black" />
+							<Fontisto name="email" size={24} color="#0286ff" />
 						)}
 					/>
 					<InputField
@@ -158,7 +158,7 @@ export default function SignIn() {
 						}
 						errors={errors.password}
 						LeftIcon={(style: any) => (
-							<MaterialIcons name="lock-outline" size={24} color="black" />
+							<MaterialIcons name="lock-outline" size={24} color="#0286ff" />
 						)}
 						RightIcon={(style: any) => (
 							<Feather
@@ -202,20 +202,20 @@ export default function SignIn() {
 								fontSize: responsiveFontSize(1.8),
 							}}
 						>
-							Create an account{" "}
+							Create an account?{" "}
 						</Text>
 						<Text
-							className="text-primary font-bold"
+							className="text-primary-500 font-bold"
 							style={{
 								fontSize: responsiveFontSize(1.8),
 							}}
 						>
-							Sign in
+							Sign up
 						</Text>
 					</Link>
 					{/* Sign in */}
 					<Link
-						href="/(auth)/Otp"
+						href="/(auth)/ForgotPassword"
 						className="text-center text-general-200"
 						style={{
 							marginTop: responsiveWidth(2.5),
@@ -223,7 +223,7 @@ export default function SignIn() {
 						}}
 					>
 						<Text
-							className="text-secondary-200 font-bold"
+							className="text-secondary-600 font-bold"
 							style={{
 								fontSize: responsiveFontSize(1.8),
 							}}

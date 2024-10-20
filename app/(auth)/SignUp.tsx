@@ -191,6 +191,7 @@ export default function SignUp() {
 							fontSize: responsiveFontSize(3),
 							marginBottom: responsiveWidth(2),
 						}}
+						className="text-primary-500 font-bold"
 					>
 						Sign Up
 					</Text>
@@ -218,7 +219,7 @@ export default function SignUp() {
 						onChangeText={(value) => setUserData({ ...userData, name: value })}
 						errors={errors.name}
 						LeftIcon={(style: any) => (
-							<AntDesign name="user" size={24} color="black" style={style} />
+							<AntDesign name="user" size={24} color="#0286ff" style={style} />
 						)}
 					/>
 					<InputField
@@ -228,7 +229,7 @@ export default function SignUp() {
 						onChangeText={(value) => setUserData({ ...userData, email: value })}
 						errors={errors.email}
 						LeftIcon={(style: any) => (
-							<Fontisto name="email" size={24} color="black" />
+							<Fontisto name="email" size={24} color="#0286ff" />
 						)}
 					/>
 					<InputField
@@ -238,7 +239,7 @@ export default function SignUp() {
 						onChangeText={(value) => setUserData({ ...userData, phone: value })}
 						errors={errors.phone}
 						LeftIcon={(style: any) => (
-							<Feather name="phone" size={24} color="black" />
+							<Feather name="phone" size={24} color="#0286ff" />
 						)}
 						keyBoardType={
 							Platform.OS === "android" ? "phone-pad" : "name-phone-pad"
@@ -254,7 +255,7 @@ export default function SignUp() {
 						}
 						errors={errors.password}
 						LeftIcon={(style: any) => (
-							<MaterialIcons name="lock-outline" size={24} color="black" />
+							<MaterialIcons name="lock-outline" size={24} color="#0286ff" />
 						)}
 						RightIcon={(style: any) => (
 							<Feather
@@ -275,7 +276,7 @@ export default function SignUp() {
 						}
 						errors={errors.confirmPassword}
 						LeftIcon={(style: any) => (
-							<MaterialIcons name="lock-outline" size={24} color="black" />
+							<MaterialIcons name="lock-outline" size={24} color="#0286ff" />
 						)}
 						RightIcon={(style: any) => (
 							<Feather
@@ -369,7 +370,7 @@ export default function SignUp() {
 						Already have an account?
 					</Text>
 					<Text
-						className="text-primary font-bold"
+						className="text-primary-500 font-bold"
 						style={{
 							fontSize: responsiveFontSize(1.8),
 						}}

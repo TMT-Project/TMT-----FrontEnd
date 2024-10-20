@@ -1,9 +1,21 @@
-import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
-import React, { useState, useRef, useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+	View,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	Alert,
+	Platform,
+} from "react-native";
+import { useState, useRef, useEffect } from "react";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import KeyboardingAvoidWrapper from "../../components/KeyboardingAvoidWrapper";
 import CustomButton from "../../components/CustomButton";
+import SafeAreaWrapper from "@/components/SafeAreaWrapper";
+import {
+	responsiveFontSize,
+	responsiveWidth,
+} from "react-native-responsive-dimensions";
+import { FontAwesome6 } from "@expo/vector-icons";
 
 export default function Otp() {
 	const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
@@ -97,28 +109,69 @@ export default function Otp() {
 	};
 
 	return (
-		<SafeAreaView className="flex-1 bg-white">
-			<View className="w-full mt-5 flex flex-row items-center p-5">
+		<SafeAreaWrapper>
+			<View
+				className="w-full flex flex-row items-center"
+				style={{
+					marginTop: responsiveWidth(1),
+					padding: responsiveWidth(5),
+				}}
+			>
 				<Link href="/(auth)/SignUp">
-					<Text className="text-lg text-black font-JakartaBold">Back</Text>
+					<FontAwesome6 name="arrow-left-long" size={20} color="#737373" />
 				</Link>
 			</View>
 			<KeyboardingAvoidWrapper>
-				<View className="w-full items-center mt-16 ">
-					<Text className="text-3xl font-JakartaBold tracking-widest mb-2">
+				<View
+					className="w-full items-center"
+					style={{
+						marginTop: responsiveWidth(5),
+					}}
+				>
+					<Text
+						className="tracking-widest text-primary-500 font-bold"
+						style={{
+							fontSize: responsiveFontSize(3),
+							marginBottom: responsiveWidth(2),
+						}}
+					>
 						Enter Verification Code
 					</Text>
-					<Text className="text-base text-gray-500">
+					<Text
+						className="text-gray-500"
+						style={{
+							fontSize: responsiveFontSize(1.8),
+						}}
+					>
 						We have sent to your inbox
 					</Text>
 				</View>
-				<View className="px-5 pt-2 my-10 w-full flex flex-col justify-center items-center">
-					<View className="w-full flex flex-row justify-center items-center">
+				<View
+					className="w-full flex flex-col justify-center items-center"
+					style={{
+						marginVertical: responsiveWidth(5),
+					}}
+				>
+					<View
+						className="w-full flex flex-row justify-center items-center"
+						style={{
+							paddingVertical: responsiveWidth(5),
+						}}
+					>
 						<TextInput
 							ref={otp1}
-							keyboardType="numeric"
 							maxLength={1}
-							className={`p-2 text-xl border border-neutral-300 rounded-xl text-center w-[52px] h-[52px] mr-5 ${"focus:border-primary-500"}`}
+							keyboardType={
+								Platform.OS === "ios" ? "name-phone-pad" : "numeric"
+							}
+							className="border border-neutral-300 rounded-xl text-center focus:border-primary-500"
+							style={{
+								marginRight: responsiveWidth(5),
+								height: responsiveWidth(15),
+								width: responsiveWidth(15),
+								padding: responsiveWidth(2),
+								fontSize: responsiveFontSize(3),
+							}}
 							value={otp.otp1}
 							onChangeText={(txt) => {
 								setOtp({ ...otp, otp1: txt });
@@ -135,9 +188,18 @@ export default function Otp() {
 						/>
 						<TextInput
 							ref={otp2}
-							keyboardType="numeric"
 							maxLength={1}
-							className={`p-2 text-xl border border-neutral-300 rounded-xl text-center w-[52px] h-[52px] mr-5 ${"focus:border-primary-500"}`}
+							keyboardType={
+								Platform.OS === "ios" ? "name-phone-pad" : "numeric"
+							}
+							className="border border-neutral-300 rounded-xl text-center focus:border-primary-500"
+							style={{
+								marginRight: responsiveWidth(5),
+								height: responsiveWidth(15),
+								width: responsiveWidth(15),
+								padding: responsiveWidth(2),
+								fontSize: responsiveFontSize(3),
+							}}
 							value={otp.otp2}
 							onChangeText={(txt) => {
 								setOtp({ ...otp, otp2: txt });
@@ -153,9 +215,18 @@ export default function Otp() {
 						/>
 						<TextInput
 							ref={otp3}
-							keyboardType="numeric"
 							maxLength={1}
-							className={`p-2 text-xl border border-neutral-300 rounded-xl text-center w-[52px] h-[52px] mr-5 ${"focus:border-primary-500"}`}
+							keyboardType={
+								Platform.OS === "ios" ? "name-phone-pad" : "numeric"
+							}
+							className="border border-neutral-300 rounded-xl text-center focus:border-primary-500"
+							style={{
+								marginRight: responsiveWidth(5),
+								height: responsiveWidth(15),
+								width: responsiveWidth(15),
+								padding: responsiveWidth(2),
+								fontSize: responsiveFontSize(3),
+							}}
 							value={otp.otp3}
 							onChangeText={(txt) => {
 								setOtp({ ...otp, otp3: txt });
@@ -171,9 +242,18 @@ export default function Otp() {
 						/>
 						<TextInput
 							ref={otp4}
-							keyboardType="numeric"
 							maxLength={1}
-							className={`p-2 text-xl border border-neutral-300 rounded-xl text-center w-[52px] h-[52px] mr-5 ${"focus:border-primary-500"}`}
+							keyboardType={
+								Platform.OS === "ios" ? "name-phone-pad" : "numeric"
+							}
+							className="border border-neutral-300 rounded-xl text-center focus:border-primary-500"
+							style={{
+								marginRight: responsiveWidth(5),
+								height: responsiveWidth(15),
+								width: responsiveWidth(15),
+								padding: responsiveWidth(2),
+								fontSize: responsiveFontSize(3),
+							}}
 							value={otp.otp4}
 							onChangeText={(txt) => {
 								setOtp({ ...otp, otp4: txt });
@@ -187,7 +267,12 @@ export default function Otp() {
 					</View>
 
 					{/* Buttons */}
-					<View className="w-full flex flex-col justify-center items-center">
+					<View
+						className="w-full flex flex-col justify-center items-center"
+						style={{
+							marginTop: responsiveWidth(2),
+						}}
+					>
 						<CustomButton
 							title="Verify"
 							bgVariant={`${
@@ -208,26 +293,44 @@ export default function Otp() {
 									? false
 									: true
 							}
+							width={responsiveWidth(95)}
 						/>
 					</View>
 
 					{/* Timer */}
-					<View className="w-full mt-3 flex flex-row justify-center items-center">
+					<View
+						className="w-full flex flex-row justify-center items-center"
+						style={{
+							marginTop: responsiveWidth(2),
+						}}
+					>
 						{count === 0 ? (
 							<TouchableOpacity
 								className="w-full flex justify-center items-center"
 								onPress={onResend}
 							>
-								<Text className="text-lg text-[#0286ff] font-bold">Resend</Text>
+								<Text
+									className=" text-[#0286ff] font-bold"
+									style={{
+										fontSize: responsiveFontSize(2),
+									}}
+								>
+									Resend
+								</Text>
 							</TouchableOpacity>
 						) : (
-							<Text className="text-base text-gray-500">
+							<Text
+								className=" text-gray-500 font-bold"
+								style={{
+									fontSize: responsiveFontSize(2),
+								}}
+							>
 								Resending in {count} seconds
 							</Text>
 						)}
 					</View>
 				</View>
 			</KeyboardingAvoidWrapper>
-		</SafeAreaView>
+		</SafeAreaWrapper>
 	);
 }
