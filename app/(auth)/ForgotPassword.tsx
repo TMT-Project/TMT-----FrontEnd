@@ -1,11 +1,16 @@
 import { View, Text, Alert } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Link, router, useLocalSearchParams } from "expo-router";
+import { Link, router } from "expo-router";
 import InputField from "../../components/InputField";
 import CustomButton from "../../components/CustomButton";
 import { useState } from "react";
 // import { BASE_URL } from "@env";
 import { FormErrors } from "@/types/type";
+import SafeAreaWrapper from "@/components/SafeAreaWrapper";
+import {
+	responsiveFontSize,
+	responsiveWidth,
+} from "react-native-responsive-dimensions";
+import { FontAwesome6, Fontisto } from "@expo/vector-icons";
 
 export default function ForgotPassword() {
 	const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
@@ -74,46 +79,104 @@ export default function ForgotPassword() {
 	};
 
 	return (
-		<SafeAreaView className="flex-1 bg-white">
-			<View className="w-full mt-5 flex flex-row items-center p-5">
+		<SafeAreaWrapper>
+			<View
+				className="w-full flex flex-row items-center"
+				style={{
+					marginTop: responsiveWidth(1),
+					padding: responsiveWidth(5),
+				}}
+			>
 				<Link href="/(auth)/SignIn">
-					<Text className="text-lg text-black font-JakartaBold">Back</Text>
+					<FontAwesome6 name="arrow-left-long" size={20} color="#737373" />
 				</Link>
 			</View>
-			<View className="w-full items-center ">
-				<Text className="text-3xl font-JakartaBold mb-2">Forget Password</Text>
-				<Text className="text-base text-gray-500">
+
+			<View
+				className="w-full items-center"
+				style={{
+					marginBottom: responsiveWidth(5),
+				}}
+			>
+				<Text
+					style={{
+						fontSize: responsiveFontSize(3),
+						marginBottom: responsiveWidth(2),
+					}}
+					className="text-primary-500 font-bold"
+				>
+					Forget Password
+				</Text>
+				<Text
+					className="text-gray-500"
+					style={{
+						fontSize: responsiveFontSize(1.8),
+					}}
+				>
 					Enter your email below to receive reset code
 				</Text>
 			</View>
-			<View className="px-5 pt-2 w-full">
+
+			<View
+				className="w-full  flex justify-center items-center"
+				style={{
+					paddingHorizontal: responsiveWidth(3),
+				}}
+			>
 				<InputField
 					label="Email"
 					placeholder="Enter your email"
 					value={userData.email}
-					errors={errors.email}
 					onChangeText={(value) => setUserData({ ...userData, email: value })}
+					errors={errors.email}
+					LeftIcon={(style: any) => (
+						<Fontisto name="email" size={24} color="#0286ff" />
+					)}
 				/>
 
-				<CustomButton
-					title="Continue"
-					onPress={onSubmit}
-					disabled={false}
-					className="mt-4"
-				/>
+				<View
+					style={{
+						marginTop: responsiveWidth(5),
+					}}
+				>
+					<CustomButton
+						title="Verify"
+						onPress={onSubmit}
+						width={responsiveWidth(95)}
+						disabled={userData.email === ""}
+						bgVariant={userData.email === "" ? "secondary" : "default"}
+					/>
+				</View>
 
 				{/* Sign in */}
 				<Link
-					href="/(auth)/SignIn"
-					className="text-lg text-center text-general-200 "
+					href="/(auth)/SignUp"
+					className="text-center text-general-200"
+					style={{
+						marginTop: responsiveWidth(2.5),
+						marginBottom: responsiveWidth(5),
+					}}
 				>
-					<Text className="text-base text-center text-gray-500">
-						Have an account{" "}
+					<Text
+						className="text-center text-gray-500"
+						style={{
+							fontSize: responsiveFontSize(1.8),
+						}}
+					>
+						Don't have an account?
 					</Text>
-					<Text className="text-base text-primary-500">Sign in</Text>
+					<Text
+						className="text-primary-500 font-bold"
+						style={{
+							fontSize: responsiveFontSize(1.8),
+						}}
+					>
+						{" "}
+						SignUp
+					</Text>
 				</Link>
 			</View>
 			<View className="w-full items-center"></View>
-		</SafeAreaView>
+		</SafeAreaWrapper>
 	);
 }

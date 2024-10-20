@@ -1,12 +1,16 @@
 import { View, Text } from "react-native";
-import React, { useState } from "react";
-// import { BASE_URL } from "@env";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useState } from "react";
 import { Link, router } from "expo-router";
 import KeyboardingAvoidWrapper from "../../components/KeyboardingAvoidWrapper";
 import InputField from "../../components/InputField";
 import CustomButton from "../../components/CustomButton";
 import { FormErrors } from "@/types/type";
+import SafeAreaWrapper from "@/components/SafeAreaWrapper";
+import {
+	responsiveFontSize,
+	responsiveWidth,
+} from "react-native-responsive-dimensions";
+import { Feather, FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 
 export default function ResetPassword() {
 	const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
@@ -14,6 +18,9 @@ export default function ResetPassword() {
 		password: "",
 		confirmPassword: "",
 	});
+
+	const [showPassword, setShowPassword] = useState(false);
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 	const [errors, setErrors] = useState<FormErrors>({
 		password: "",
@@ -85,66 +92,148 @@ export default function ResetPassword() {
 	};
 
 	return (
-		<SafeAreaView className="flex-1 bg-white">
-			<View className="w-full mt-5 flex flex-row items-center p-5">
-				<Link href="/(auth)/SignUp">
-					<Text className="text-lg text-black font-JakartaBold">Back</Text>
+		<SafeAreaWrapper>
+			<View
+				className="w-full flex flex-row items-center"
+				style={{
+					marginTop: responsiveWidth(1),
+					padding: responsiveWidth(5),
+				}}
+			>
+				<Link href="/(auth)/SignIn">
+					<FontAwesome6 name="arrow-left-long" size={20} color="#737373" />
 				</Link>
 			</View>
 			<KeyboardingAvoidWrapper>
-				<View className="w-full items-center ">
-					<Text className="text-3xl font-JakartaBold mb-2">Reset Password</Text>
-					<Text className="text-base text-gray-500">
+				<View
+					className="w-full items-center"
+					style={{
+						marginBottom: responsiveWidth(5),
+					}}
+				>
+					<Text
+						style={{
+							fontSize: responsiveFontSize(3),
+							marginBottom: responsiveWidth(2),
+						}}
+						className="text-primary-500 font-bold"
+					>
+						Reset Password
+					</Text>
+					<Text
+						className="text-gray-500"
+						style={{
+							fontSize: responsiveFontSize(1.8),
+						}}
+					>
 						Enter your new password to reset your account
 					</Text>
 				</View>
 
-				<View className="px-5 pt-2 mb-10 w-full">
+				<View
+					className="w-full  flex justify-center items-center"
+					style={{
+						paddingHorizontal: responsiveWidth(3),
+					}}
+				>
 					<InputField
 						label="Password"
 						placeholder="Enter your password"
-						secureTextEntry
+						secureTextEntry={showPassword}
 						value={userData.password}
 						onChangeText={(value) =>
 							setUserData({ ...userData, password: value })
 						}
 						errors={errors.password}
+						LeftIcon={(style: any) => (
+							<MaterialIcons name="lock-outline" size={24} color="#0286ff" />
+						)}
+						RightIcon={(style: any) => (
+							<Feather
+								name={showPassword ? "eye-off" : "eye"}
+								size={24}
+								color="black"
+								onPress={() => setShowPassword(!showPassword)}
+							/>
+						)}
 					/>
 					<InputField
 						label="Confirm Password"
 						placeholder="Confirm your password"
-						secureTextEntry
+						secureTextEntry={showConfirmPassword}
 						value={userData.confirmPassword}
 						onChangeText={(value) =>
 							setUserData({ ...userData, confirmPassword: value })
 						}
 						errors={errors.confirmPassword}
+						LeftIcon={(style: any) => (
+							<MaterialIcons name="lock-outline" size={24} color="#0286ff" />
+						)}
+						RightIcon={(style: any) => (
+							<Feather
+								name={showPassword ? "eye-off" : "eye"}
+								size={24}
+								color="black"
+								onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+							/>
+						)}
 					/>
 
-					<CustomButton
-						title="Sign Up"
-						onPress={onResetPress}
-						className="mt-4"
-					/>
+					<View
+						style={{
+							marginTop: responsiveWidth(5),
+						}}
+					>
+						<CustomButton
+							title="Verify"
+							onPress={onResetPress}
+							width={responsiveWidth(95)}
+							disabled={
+								userData.password === "" || userData.confirmPassword === ""
+							}
+							bgVariant={
+								userData.password === "" || userData.confirmPassword === ""
+									? "secondary"
+									: "default"
+							}
+						/>
+					</View>
 
 					{/* Login */}
 					<Link
-						href="/(auth)/SignIn"
-						className="text-lg text-center text-general-200 "
+						href="/(auth)/SignUp"
+						className="text-center text-general-200"
+						style={{
+							marginTop: responsiveWidth(2.5),
+							marginBottom: responsiveWidth(5),
+						}}
 					>
-						<Text className="text-base text-center text-gray-500">
-							Already have an account?
+						<Text
+							className="text-center text-gray-500"
+							style={{
+								fontSize: responsiveFontSize(1.8),
+							}}
+						>
+							Don't have an account?
 						</Text>
-						<Text className="text-base text-primary-500"> Login</Text>
+						<Text
+							className="text-primary-500 font-bold"
+							style={{
+								fontSize: responsiveFontSize(1.8),
+							}}
+						>
+							{" "}
+							SignUp
+						</Text>
 					</Link>
 				</View>
-				<Link
+				{/* <Link
 					href="/(auth)/ForgotPassword"
 					className="text-lg text-center text-general-200 "
 				>
 					<Text className="text-base text-primary-500"> Login</Text>
-				</Link>
+				</Link> */}
 			</KeyboardingAvoidWrapper>
-		</SafeAreaView>
+		</SafeAreaWrapper>
 	);
 }
