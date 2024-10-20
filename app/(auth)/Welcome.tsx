@@ -27,7 +27,7 @@ export default function Welcome() {
 
 	return (
 		<SafeAreaWrapper>
-			<View className="flex flex-1 items-center bg-primary-200">
+			<View className="flex flex-1 items-center bg-primary-300">
 				<TouchableOpacity
 					onPress={() => {
 						router.push("/(root)/(tabs)/Home");
@@ -47,7 +47,7 @@ export default function Welcome() {
 						loop={false}
 						dot={
 							<View
-								className="rounded-full transition-all duration-1000 ease-in-out bg-primary-300"
+								className="rounded-full transition-all duration-1000 ease-in-out bg-primary-400"
 								style={{
 									width: responsiveWidth(8),
 									height: responsiveHeight(0.5),
