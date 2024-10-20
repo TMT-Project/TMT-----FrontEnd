@@ -6,8 +6,22 @@ import {
 	responsiveWidth,
 } from "react-native-responsive-dimensions";
 import RadioButtons from "@/components/RadioButtons";
+import { useState } from "react";
+import FlightBoard from "@/components/FlightSearch/FlightBoard";
+import FlightNumber from "@/components/FlightSearch/FlightNumber";
+import FlightLocation from "@/components/FlightSearch/FlightLocation";
 
 export default function Search() {
+	const radioOptions: ("Flight Board" | "Flight Number" | "Location")[] = [
+		"Flight Board",
+		"Flight Number",
+		"Location",
+	];
+
+	const [radioOption, setRadioOption] = useState<
+		"Flight Board" | "Flight Number" | "Location"
+	>(radioOptions[0]);
+
 	return (
 		<SafeAreaWrapper>
 			<KeyboardingAvoidWrapper>
@@ -37,8 +51,28 @@ export default function Search() {
 					</Text>
 				</View>
 
-				<View>
-					<View>{/* <RadioButtons  /> */}</View>
+				<View
+					className="w-full flex justify-center items-center"
+					style={{
+						paddingHorizontal: responsiveWidth(3),
+					}}
+				>
+					<View className="flex flex-row">
+						<RadioButtons
+							options={radioOptions}
+							currentOption={radioOption}
+							initialValue={radioOptions[0]}
+							setOption={setRadioOption}
+							containerStyle="flex flex-row justify-around items-center w-full"
+							buttonStyle="flex flex-row items-center"
+						/>
+					</View>
+
+					{radioOption == "Flight Board" && <FlightBoard />}
+
+					{radioOption == "Flight Number" && <FlightNumber />}
+
+					{radioOption == "Location" && <FlightLocation />}
 				</View>
 			</KeyboardingAvoidWrapper>
 		</SafeAreaWrapper>

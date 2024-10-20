@@ -38,7 +38,12 @@ export default function RadioButtons({
 	}, [currentOption]);
 
 	return (
-		<View className={containerStyle}>
+		<View
+			className={containerStyle}
+			style={{
+				columnGap: responsiveWidth(3),
+			}}
+		>
 			{options.map((option) => (
 				<TouchableOpacity
 					className={buttonStyle}
@@ -55,7 +60,7 @@ export default function RadioButtons({
 					<Text
 						className={textStyle}
 						style={{
-							fontSize: responsiveFontSize(2),
+							fontSize: responsiveFontSize(1.5),
 							marginLeft: responsiveWidth(1.5),
 						}}
 					>

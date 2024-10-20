@@ -138,10 +138,10 @@ export default function Register() {
 				<View
 					className="w-full  flex justify-center items-center"
 					style={{
-						paddingHorizontal: responsiveWidth(3),
+						paddingHorizontal: responsiveWidth(3.2),
 					}}
 				>
-					<View className="flex flex-row mb-2 justify-between items-center w-full">
+					<View className="flex flex-row justify-between items-center w-full">
 						<Text
 							className="font-medium"
 							style={{
@@ -155,117 +155,79 @@ export default function Register() {
 							currentOption={option}
 							setOption={setOption}
 							options={options}
-							containerStyle="flex flex-row m-2 p-2 items-center justify-center gap-x-5"
+							containerStyle="flex flex-row  items-center justify-center"
 							buttonStyle="flex flex-row items-center"
 							textStyle="text-lg"
 							initialValue={options[0]}
 							onChanged={(value) => handleChange("serviceType", value)}
 						/>
 					</View>
-					<View
-						className="w-full"
-						style={{
-							marginBottom: responsiveWidth(2),
-						}}
-					>
-						<InputField
-							placeholder="Flight Number"
-							label="Flight Number"
-							onChangeText={(text) => handleChange("flightNumber", text)}
-							errors={errors.flightNumber}
-							value={registerInfo.flightNumber}
-							LeftIcon={() => (
-								<MaterialIcons name="flight" size={24} color="#0286FF" />
-							)}
-						/>
-					</View>
-					<View
-						className="w-full"
-						style={{
-							marginBottom: responsiveWidth(2),
-						}}
-					>
+
+					<InputField
+						placeholder="Flight Number"
+						label="Flight Number"
+						onChangeText={(text) => handleChange("flightNumber", text)}
+						errors={errors.flightNumber}
+						value={registerInfo.flightNumber}
+						LeftIcon={() => (
+							<MaterialIcons name="flight" size={24} color="#0286FF" />
+						)}
+					/>
+					<View className="w-full">
 						<DatePicker
 							onChange={(date) => {
 								setRegisterInfo({ ...registerInfo, date: date.toDateString() });
 							}}
 							error={errors.date}
 							value={registerInfo.date}
+							label="Date"
 						/>
 					</View>
-					<View
-						className="w-full"
-						style={{
-							marginBottom: responsiveWidth(2),
-						}}
-					>
-						<InputField
-							placeholder="Source"
-							label="From"
-							editable={false}
-							onChangeText={(text) => handleChange("from", text)}
-							value={registerInfo.from}
-							LeftIcon={() => (
-								<MaterialIcons
-									name="flight-takeoff"
-									size={24}
-									color="#0286FF"
-								/>
-							)}
-						/>
-					</View>
-					<View
-						className="w-full"
-						style={{
-							marginBottom: responsiveWidth(2),
-						}}
-					>
-						<InputField
-							placeholder="Destination"
-							label="To"
-							editable={false}
-							onChangeText={(text) => handleChange("to", text)}
-							value={registerInfo.to}
-							LeftIcon={() => (
-								<MaterialIcons name="flight-land" size={24} color="#0286FF" />
-							)}
-						/>
-					</View>
-					<View
-						className="w-full"
-						style={{
-							marginBottom: responsiveWidth(2),
-						}}
-					>
-						<InputField
-							placeholder="Weight in Kg"
-							label="Weight"
-							inputMode="numeric"
-							onChangeText={(text) => handleChange("weight", text)}
-							errors={errors.weight}
-							value={registerInfo.weight}
-							LeftIcon={() => (
-								<FontAwesome6 name="weight-hanging" size={24} color="#0286FF" />
-							)}
-						/>
-					</View>
-					<View
-						className="w-full"
-						style={{
-							marginBottom: responsiveWidth(2),
-						}}
-					>
-						<InputField
-							placeholder="Enter PNR Number"
-							label="PNR Number"
-							onChangeText={(text) => handleChange("pnrNumber", text)}
-							errors={errors.pnrNumber}
-							value={registerInfo.pnrNumber}
-							LeftIcon={() => (
-								<FontAwesome name="ticket" size={24} color="#0286FF" />
-							)}
-						/>
-					</View>
+
+					<InputField
+						placeholder="Source"
+						label="From"
+						editable={false}
+						onChangeText={(text) => handleChange("from", text)}
+						value={registerInfo.from}
+						LeftIcon={() => (
+							<MaterialIcons name="flight-takeoff" size={24} color="#0286FF" />
+						)}
+					/>
+
+					<InputField
+						placeholder="Destination"
+						label="To"
+						editable={false}
+						onChangeText={(text) => handleChange("to", text)}
+						value={registerInfo.to}
+						LeftIcon={() => (
+							<MaterialIcons name="flight-land" size={24} color="#0286FF" />
+						)}
+					/>
+
+					<InputField
+						placeholder="Weight in Kg"
+						label="Weight"
+						inputMode="numeric"
+						onChangeText={(text) => handleChange("weight", text)}
+						errors={errors.weight}
+						value={registerInfo.weight}
+						LeftIcon={() => (
+							<FontAwesome6 name="weight-hanging" size={24} color="#0286FF" />
+						)}
+					/>
+
+					<InputField
+						placeholder="Enter PNR Number"
+						label="PNR Number"
+						onChangeText={(text) => handleChange("pnrNumber", text)}
+						errors={errors.pnrNumber}
+						value={registerInfo.pnrNumber}
+						LeftIcon={() => (
+							<FontAwesome name="ticket" size={24} color="#0286FF" />
+						)}
+					/>
 
 					<View
 						style={{

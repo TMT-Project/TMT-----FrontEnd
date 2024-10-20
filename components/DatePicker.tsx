@@ -1,19 +1,21 @@
 import { View, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DateTimePicker, {
 	DateTimePickerEvent,
 } from "@react-native-community/datetimepicker";
 import InputField from "./InputField";
-import { Fontisto, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function DatePicker({
 	onChange,
 	error,
 	value,
+	label,
 }: {
 	onChange: (date: Date) => void;
 	error?: string;
 	value?: string;
+	label?: string;
 }) {
 	const [date, setDate] = useState(new Date());
 	const [showPicker, setShowPicker] = useState(false);
@@ -67,7 +69,7 @@ export default function DatePicker({
 				<InputField
 					inputStyle="text-black"
 					// inputContainerStyle="border-0"
-					label="Date"
+					label={label}
 					value={date.toDateString()}
 					editable={false}
 					errors={error}
