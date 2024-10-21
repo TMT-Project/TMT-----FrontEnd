@@ -110,7 +110,7 @@ export default function Register() {
 		<SafeAreaWrapper>
 			<KeyboardingAvoidWrapper>
 				<View
-					className="w-full items-center"
+					className="w-full flex items-center"
 					style={{
 						marginTop: responsiveWidth(10),
 						marginBottom: responsiveWidth(6),

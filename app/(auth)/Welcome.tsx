@@ -30,7 +30,7 @@ export default function Welcome() {
 			<View className="flex flex-1 items-center bg-primary-300">
 				<TouchableOpacity
 					onPress={() => {
-						router.push("/(root)/(tabs)/Home");
+						router.push("/(root)/Details");
 					}}
 					className="w-full flex justify-end items-end p-5"
 				>
